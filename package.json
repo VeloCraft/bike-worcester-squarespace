@@ -1,0 +1,22 @@
+{
+  "name": "bike-worcester-squarespace",
+  "version": "1.0.0",
+  "description": "Scripts and stylesheets for the Bike Worcester Squarespace site",
+  "scripts": {
+    "clean": "rm dist/index.js",
+    "build": "webpack --config webpack.config.js --mode production"
+  },
+  "keywords": [],
+  "author": "Al Pagan <generamics@gmail.com>",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/preset-env": "^7.25.4",
+    "babel-loader": "^9.2.0",
+    "css-loader": "^7.1.2",
+    "sass": "^1.78.0",
+    "sass-loader": "^16.0.1",
+    "style-loader": "^4.0.0",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

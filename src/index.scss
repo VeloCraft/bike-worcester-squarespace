@@ -1,0 +1,91 @@
+$bw-blue: #3E5062;
+$bw-green: #81CA9F;
+$bw-white: #1C1C1C;
+$bw-black: #E3E3E3;
+
+@mixin mobile {
+  @media only screen and (pointer: coarse) and (max-width: 1024px),
+    screen and (max-width: 799px) {
+    @content;
+  }
+}
+
+.bikebus-badge {
+  width: 100%;
+  height: 128px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  &.stanleyroad-1 {
+    background-image: url(https://static1.squarespace.com/static/66e169ffc4b31b2cf451438d/t/66e7feec21a12f1685be68be/1726480109080/Rachel.png);
+  }
+  &.stanleyroad-2 {
+    background-image: url(https://static1.squarespace.com/static/66e169ffc4b31b2cf451438d/t/66e7ffe0303eae0a190561e4/1726480353008/Alastair.png);
+  }
+  &.stanleyroad-3 {
+    background-image: url(https://static1.squarespace.com/static/66e169ffc4b31b2cf451438d/t/66e7ff2d3267a967deace0ee/1726480173504/Lucy.png);
+  }
+}
+
+@mixin tagProduct($content, $color, $background) {
+  figure.grid-image,
+  .pdp-gallery-images,
+  section.ProductItem-gallery {
+    &:after {
+      background: $background;
+      content: $content;
+      color: $color;
+    }
+  }
+}
+
+section.products {
+  figure.grid-image,
+  .pdp-gallery-images,
+  section.ProductItem-gallery {
+    position: relative;
+    &:after {
+      position: absolute;
+      top: 0;
+      right: 0;
+      line-height: 1;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 0.5rem 1rem;
+      z-index: 100000;
+      pointer-events: none;
+      background: $bw-white;
+      content: 'In the workshop';
+      color: $bw-blue;
+    }
+  }
+  .tag-ready-to-go {
+    @include tagProduct('Ready to go', $bw-black, $bw-green);
+  }
+  .tag-reserved {
+    @include tagProduct('Reserved', $bw-white, $bw-blue);
+    .ProductItem-quantity-add-to-cart {
+      pointer-events: none;
+      opacity: 0.2;
+    }
+  }
+}
+
+.sold-out {
+  .product-details,
+  .product-lists-item {
+    .product-mark.sold-out {
+      display: none;
+    }
+  }
+}
+
+nav.ProductItem-nav {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  color: #030303;
+  :last-child {
+    opacity: 0.5;
+  }
+}
