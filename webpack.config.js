@@ -1,6 +1,7 @@
 /* global require, __dirname, module */
 
 const { join } = require('path');
+const isProd = process.env.NODE_ENV === 'production';
 
 /*
 const { existsSync, mkdirSync } = require('fs');
@@ -16,6 +17,22 @@ const config = {
     path: join(__dirname, 'dist'),
     filename: 'index.js',
   },
+  mode: 'production',
+  devServer: isProd
+    ? undefined
+    : {
+        static: {
+          directory: join(__dirname, 'dist'), // Serve files from the 'dist' directory
+        },
+        allowedHosts: 'all',
+        port: 3000,
+        compress: true,
+        watchFiles: ['src/**/*'],
+        allowedHosts: ['home.generamics.co.uk'],
+        client: {
+          overlay: false,
+        },
+      },
   module: {
     rules: [
       {

@@ -16,6 +16,8 @@ const updateDateElement = (elem, date) => {
   elem.textContent = newFormat;
 };
 
+*/
+/*
 const formatDates = () => {
   const dateMeta = document.querySelector('[itemprop=datePublished]');
   if (dateMeta != null) {
@@ -27,7 +29,9 @@ const formatDates = () => {
     timeEle.className += ' formatted-date';
   }
 };
+*/
 
+/*
 const addAnalytics = () => {
   const measurementId = 'G-QKMQTXTBJG';
   loadScript(
