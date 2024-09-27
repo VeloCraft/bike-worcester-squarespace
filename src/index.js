@@ -1,4 +1,4 @@
-import 'flickity/dist/flickity.pkgd.js';
+import Flickity from 'flickity';
 import quotes from './quotes';
 // import cookies from 'js-cookie';
 
