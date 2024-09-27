@@ -1,3 +1,5 @@
+import 'flickity/dist/flickity.pkgd.js';
+import quotes from './quotes';
 // import cookies from 'js-cookie';
 
 /*
@@ -56,9 +58,45 @@ const addAnalytics = () => {
 };
 */
 
+const addQuoteCarousel = () => {
+  document
+    .querySelectorAll('section.bikeworcester-quotes')
+    .forEach((quoteSection) => {
+      // Check if 'data-category' is set
+      const category = quoteSection.getAttribute('data-category');
+      if (!category) return;
+      const quoteList = quotes[category];
+      if (!quoteList) return;
+      const carousel = document.createElement('div');
+      carousel.className = 'main-carousel';
+      carousel.innerHTML = quoteList
+        .map(
+          ({ quote, author }) => `
+            <div class="carousel-cell">
+              <figure data-author-name="kim" class="sqs-block-quote block-animation-site-default">
+                <blockquote data-animation-role="quote">
+                  <span>“</span>${quote}<span>”</span>
+                </blockquote>
+                <figcaption class="source">— ${author}</figcaption>
+              </figure>
+            </div>
+          `
+        )
+        .join('');
+      quoteSection.appendChild(carousel);
+      new Flickity(carousel, {
+        cellAlign: 'left',
+        contain: true,
+        wrapAround: true,
+        autoPlay: 5000,
+      });
+    });
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   // formatDates();
   // aspectRatioPolyfill();
+  addQuoteCarousel();
 });
 
 window.addEventListener('load', () => {

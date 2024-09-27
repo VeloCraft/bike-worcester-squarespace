@@ -1,11 +1,14 @@
 {
   "name": "bike-worcester-squarespace",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Scripts and stylesheets for the Bike Worcester Squarespace site",
   "scripts": {
     "prebuild": "rm -rf dist/index.js",
     "build": "webpack --config webpack.config.js --mode production",
-    "serve": "npx -y webpack serve --config webpack.config.js",
+    "prescape": "mkdir -p html",
+    "scrape": "httrack https://bikeworcester.org.uk -O html --update",
+    "postscrape": "sed -i 's|https://bikeworcester.vercel.app/index.js|/dev.js|g' html/bikeworcester.org.uk/**/*.html && ln -s dist/index.js html/bikeworcester.org.uk/dev.js",
+    "dev": "pnpm dlx serve html/bikeworcester.org.uk && webpack serve --config webpack.config.js --mode development",
     "prepare": "husky",
     "commit-version-change": "git add package.json"
   },
@@ -16,8 +19,10 @@
     "@babel/preset-env": "^7.25.4",
     "babel-loader": "^9.2.0",
     "css-loader": "^7.1.2",
+    "eslint": "^9.11.1",
     "husky": "^9.1.6",
     "prettier": "^3.3.3",
+    "puppeteer": "^23.3.1",
     "sass": "^1.78.0",
     "sass-loader": "^16.0.1",
     "style-loader": "^4.0.0",
@@ -28,5 +33,8 @@
   "prettier": {
     "singleQuote": true,
     "trailingComma": "es5"
+  },
+  "dependencies": {
+    "flickity": "^3.0.0"
   }
 }

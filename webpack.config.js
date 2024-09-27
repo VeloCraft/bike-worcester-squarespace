@@ -14,21 +14,20 @@ if (!existsSync(path)) mkdirSync(path);
 const config = {
   entry: ['./src/index.js', './src/index.scss'],
   output: {
-    path: join(__dirname, 'dist'),
-    filename: 'index.js',
+    path: join(__dirname, isProd ? 'dist' : 'html/bikeworcester.org.uk'),
+    filename: isProd ? 'index.js' : 'dev.js',
   },
   mode: 'production',
   devServer: isProd
     ? undefined
     : {
         static: {
-          directory: join(__dirname, 'dist'), // Serve files from the 'dist' directory
+          directory: join(__dirname, 'html/bikeworcester.org.uk'), // Serve files from the 'dist' directory
         },
         allowedHosts: 'all',
         port: 3000,
         compress: true,
         watchFiles: ['src/**/*'],
-        allowedHosts: ['home.generamics.co.uk'],
         client: {
           overlay: false,
         },

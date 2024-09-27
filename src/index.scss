@@ -1,3 +1,5 @@
+@import 'node_modules/flickity/dist/flickity.min.css';
+
 $bw-blue: #3e5062;
 $bw-green: #81ca9f;
 $bw-black: #1c1c1c;
@@ -150,4 +152,15 @@ nav.ProductItem-nav {
 
 .cart-quantity-zero {
   visibility: hidden;
+}
+
+// A looping carousel effect that slides from right to left
+// according to the number of children in the container
+@keyframes carousel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
