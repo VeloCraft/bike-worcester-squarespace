@@ -1,7 +1,8 @@
 /* global require, __dirname, module */
 
 const { join } = require('path');
-const isProd = process.env.NODE_ENV === 'production';
+const isProd =
+  process.argv[process.argv.indexOf('--mode') + 1] === 'production';
 
 /*
 const { existsSync, mkdirSync } = require('fs');
