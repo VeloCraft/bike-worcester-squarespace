@@ -88,6 +88,7 @@ const addQuoteCarousel = () => {
         cellAlign: 'left',
         contain: true,
         wrapAround: true,
+        prevNextButtons: false,
         autoPlay: 5000,
       });
     });
