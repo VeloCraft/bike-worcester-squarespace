@@ -1,6 +1,6 @@
 {
   "name": "bike-worcester-squarespace",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Scripts and stylesheets for the Bike Worcester Squarespace site",
   "scripts": {
     "prebuild": "rm -rf dist/index.js",
