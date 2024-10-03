@@ -173,9 +173,7 @@ nav.ProductItem-nav {
 // Bike Buses
 [data-section-id='66e7284ef767460e05aaa373'] {
   .blog-item-meta-wrapper,
-  .tweak-blog-item-show-author-profile
-    .blog-item-wrapper
-    .blog-item-author-profile-wrapper {
-    display: none;
+  .blog-item-author-profile-wrapper {
+    display: none !important;
   }
 }
