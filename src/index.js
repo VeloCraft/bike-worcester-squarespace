@@ -95,7 +95,10 @@ const addQuoteCarousel = () => {
 };
 
 const addSearchToHeader = () => {
-  const headerActions = document.querySelector('.header-actions--right');
+  const headerActions = {
+    desktop: document.querySelector('.header-actions--right .showOnDesktop'),
+    mobile: document.querySelector('.header-actions--right .showOnMobile'),
+  };
   const searchLink = document.createElement('a');
   searchLink.href = '/search';
   searchLink.className = 'search-link';
@@ -104,7 +107,9 @@ const addSearchToHeader = () => {
     'https://assets.squarespace.com/universal/images-v6/icons/icon-searchqueries-32-light.png';
   img.alt = 'search icon';
   searchLink.appendChild(img);
-  headerActions.appendChild(searchLink);
+  const searchLinkClone = searchLink.cloneNode(true);
+  headerActions.desktop.appendChild(searchLink);
+  headerActions.mobile.appendChild(searchLinkClone);
 };
 
 document.addEventListener('DOMContentLoaded', () => {
