@@ -94,9 +94,27 @@ const addQuoteCarousel = () => {
     });
 };
 
+const moveSearchToHeader = () => {
+  // Find the search block
+  const search = document.querySelector('#block-3aeb5464488ee9d68588');
+  if (!search) return;
+  // Move the block to be the first child of ".header-actions--right .showOnDesktop"
+  const headerActions = document.querySelector(
+    '.header-actions--right .showOnDesktop'
+  );
+  if (!headerActions) return;
+  // If headerActions has children, insert before the first child, otherwise append
+  if (headerActions.children.length > 0) {
+    headerActions.insertBefore(search, headerActions.firstChild);
+  } else {
+    headerActions.appendChild(search);
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   // formatDates();
   // aspectRatioPolyfill();
+  moveSearchToHeader();
   addQuoteCarousel();
 });
 
