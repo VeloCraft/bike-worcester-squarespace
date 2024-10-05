@@ -180,4 +180,7 @@ nav.ProductItem-nav {
 
 .header-actions .search-link {
   margin: 8px 16px;
+  &:hover {
+    border-bottom: 1px solid #e3e3e3;
+  }
 }
