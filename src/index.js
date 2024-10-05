@@ -95,9 +95,7 @@ const addQuoteCarousel = () => {
 };
 
 const addSearchToHeader = () => {
-  const headerActions = document.querySelector(
-    '.header-actions--right .showOnDesktop'
-  );
+  const headerActions = document.querySelector('.header-actions--right');
   const searchLink = document.createElement('a');
   searchLink.href = '/search';
   searchLink.className = 'search-link';
