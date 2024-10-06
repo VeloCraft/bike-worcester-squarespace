@@ -74,6 +74,8 @@ const addHeaderCarousel = () => {
   new Flickity(wrapper, {
     wrapAround: true,
     autoPlay: 5000,
+    pageDots: window.innerWidth <= 799,
+    prevNextButtons: window.innerWidth > 799,
   });
 };
 

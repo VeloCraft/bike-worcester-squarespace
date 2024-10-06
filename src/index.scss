@@ -187,11 +187,16 @@ nav.ProductItem-nav {
 
 .flickity-enabled section.page-section.flickity-cell {
   padding-top: 0 !important;
+  @media screen and (min-width: 800px) {
+    .content .fluid-engine {
+      margin: 0 48px;
+    }
+  }
 }
 
 .flickity-button {
   background: rgba(227, 227, 227, 0.75);
-  & :focus {
+  &:focus {
     box-shadow: 0 0 0 5px $bw-green;
   }
 }
