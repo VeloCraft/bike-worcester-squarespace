@@ -66,11 +66,12 @@ const addHeaderCarousel = () => {
     const headerCarousel = section.closest('.page-section');
     if (!headerCarousel) return;
     if (index === 0) {
-      wrapper.style = headerCarousel.style;
-      console.log(headerCarousel.style);
+      wrapper.setAttribute('style', headerCarousel.getAttribute('style'));
     }
-    headerCarousel.style =
-      'margin-right:16px;width:100vw;padding-top:0 !important;';
+    headerCarousel.setAttribute(
+      'style',
+      'margin-right:16px;width:100vw;padding-top:0 !important;'
+    );
     wrapper.appendChild(headerCarousel);
   });
   new Flickity(wrapper, {

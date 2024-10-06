@@ -185,6 +185,9 @@ nav.ProductItem-nav {
   }
 }
 
-.flickity-button:focus {
-  box-shadow: 0 0 0 5px $bw-green;
+.flickity-button {
+  background: rgba(227, 227, 227, 0.75);
+  & :focus {
+    box-shadow: 0 0 0 5px $bw-green;
+  }
 }
