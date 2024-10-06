@@ -185,6 +185,10 @@ nav.ProductItem-nav {
   }
 }
 
+.flickity-enabled section.page-section.flickity-cell {
+  padding-top: 0 !important;
+}
+
 .flickity-button {
   background: rgba(227, 227, 227, 0.75);
   & :focus {
