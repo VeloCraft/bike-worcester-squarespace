@@ -67,8 +67,8 @@ const addHeaderCarousel = () => {
     if (!headerCarousel) return;
     if (index === 0) {
       wrapper.style = headerCarousel.style;
-      headerCarousel.style = '';
     }
+    headerCarousel.style = 'margin-right:16px;width:100vw;';
     wrapper.appendChild(headerCarousel);
   });
   new Flickity(wrapper, {
