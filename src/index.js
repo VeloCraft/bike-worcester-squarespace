@@ -61,15 +61,16 @@ const addHeaderCarousel = () => {
   );
   if (!headerSections.length) return;
   const wrapper = document.createElement('div');
-  let wrapperStyle = '';
   document.getElementById('sections').appendChild(wrapper);
   headerSections.forEach((section, index) => {
     const headerCarousel = section.closest('.page-section');
     if (!headerCarousel) return;
     if (index === 0) {
-      wrapperStyle = headerCarousel.style;
+      wrapper.style = headerCarousel.style;
+      console.log(headerCarousel.style);
     }
-    headerCarousel.style = `margin-right:16px;width:100vw;${wrapperStyle}`;
+    headerCarousel.style =
+      'margin-right:16px;width:100vw;padding-top:0 !important;';
     wrapper.appendChild(headerCarousel);
   });
   new Flickity(wrapper, {
