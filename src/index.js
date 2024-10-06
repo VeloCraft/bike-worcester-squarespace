@@ -59,8 +59,9 @@ const addHeaderCarousel = () => {
   const headerSections = document.querySelectorAll(
     '.page-section .slide-contents'
   );
+  if (!headerSections.length) return;
   const wrapper = document.createElement('div');
-  document.getElementById('#sections').appendChild(wrapper);
+  document.getElementById('sections').appendChild(wrapper);
   headerSections.forEach((section, index) => {
     const headerCarousel = section.closest('.page-section');
     if (!headerCarousel) return;
