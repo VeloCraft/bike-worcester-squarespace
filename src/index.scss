@@ -184,3 +184,7 @@ nav.ProductItem-nav {
     border-bottom: 1px solid #e3e3e3;
   }
 }
+
+.flickity-button:focus {
+  box-shadow: 0 0 0 5px $bw-green;
+}
