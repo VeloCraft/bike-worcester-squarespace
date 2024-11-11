@@ -58,6 +58,10 @@ $maxWidth: 960px;
   font-weight: 300;
 }
 
+/*
+ * Blog tweaks
+ */
+
 .blog-item-wrapper .blog-meta-item a.blog-item-category--bikebus {
   color: transparent;
   user-select: none;
@@ -72,6 +76,10 @@ $maxWidth: 960px;
     rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
     rgba(0, 0, 0, 0.14) 0px 3px 4px 0px,
     rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+}
+
+.tweak-blog-item-show-author-name .blog-item-wrapper .blog-meta-item--author {
+  display: none;
 }
 
 @media screen and (min-width: 786px) {
