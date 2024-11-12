@@ -1,0 +1,346 @@
+@import '../node_modules/flickity/css/flickity.css';
+
+:root {
+  --bwBlack: rgb(28 28 28);
+  --bwGreen: rgb(129 202 159);
+  --bwWhite: rgb(227 227 227);
+  --bwBlue: rgb(62 80 98);
+  --bwBg: hsl(210 10% 80% / 1);
+  --bwMaxWidth: 960px;
+}
+
+@mixin mobile {
+  @media only screen and (pointer: coarse) and (max-width: 1024px),
+    screen and (max-width: 799px) {
+    @content;
+  }
+}
+
+@mixin tagProduct($content, $color, $background) {
+  figure.grid-image,
+  .pdp-gallery-images,
+  section.ProductItem-gallery {
+    &:after {
+      background: $background;
+      content: $content;
+      color: $color;
+    }
+  }
+}
+
+.header-nav {
+  .header-nav-item,
+  .header-nav-folder-item {
+    > a {
+      line-height: 1.8;
+      &:hover {
+        background-image: linear-gradient(currentColor, currentColor);
+        background-repeat: repeat-x;
+        background-size: 1px 1px;
+        background-position: 0 100%;
+        background-position: 0 calc(100% - 0.1em);
+      }
+    }
+    &.header-nav-item--active,
+    &.header-nav-folder-item--active {
+      > a {
+        font-weight: 700;
+        background: none;
+        color: var(--bwGreen);
+        .header-nav-folder-item-content {
+          background: none;
+        }
+      }
+    }
+  }
+}
+
+.sqs-block-summary-v2 .summary-title,
+.sqs-block-summary-v2 .summary-block-setting-text-size-medium .summary-title a {
+  font-size: 1.6rem;
+  font-weight: 400;
+}
+
+/*
+ * Blog tweaks
+ */
+
+.blog-side-by-side .blog-item {
+  align-items: flex-start;
+}
+
+.blog-item-wrapper .blog-meta-item a.blog-item-category--bikebus {
+  color: transparent;
+  user-select: none;
+  background-image: url(https://static1.squarespace.com/static/66e169ffc4b31b2cf451438d/t/66e9894ae1f5535e984206ef/1726581066140/bikebus-logo-text-256.png);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+  aspect-ratio: 256 / 65;
+  width: 148px;
+  display: inline-block;
+  box-shadow:
+    rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
+    rgba(0, 0, 0, 0.14) 0px 3px 4px 0px,
+    rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+}
+
+.tweak-blog-item-show-author-name .blog-item-wrapper .blog-meta-item--author {
+  display: none;
+}
+
+@media screen and (min-width: 786px) {
+  .tweak-blog-item-width-custom .blog-item-wrapper .blog-item-inner-wrapper {
+    min-width: 640px;
+  }
+}
+
+.events {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.tweak-blog-side-by-side-width-inset .blog-side-by-side {
+  max-width: var(--bwMaxWidth);
+  h1.blog-title {
+    font-size: 1.8rem;
+  }
+}
+
+.cart-quantity-zero {
+  visibility: hidden;
+}
+
+// A looping carousel effect that slides from right to left
+// according to the number of children in the container
+@keyframes carousel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+// Global Squarespace style fixes
+.squarespace-comments .comment-btn-wrapper {
+  font-size: inherit;
+}
+
+// Bike Buses
+[data-section-id='66e7284ef767460e05aaa373'] {
+  .blog-item-meta-wrapper,
+  .blog-item-author-profile-wrapper {
+    display: none !important;
+  }
+}
+
+.header-actions .search-link {
+  margin: 8px 16px;
+  &:hover {
+    border-bottom: 1px solid #e3e3e3;
+  }
+}
+
+.header-carousel.flickity-enabled {
+  @media screen and (min-width: 800px) {
+    margin-bottom: 48px;
+  }
+  section.page-section.flickity-cell {
+    padding-top: 0 !important;
+    @media screen and (min-width: 800px) {
+      .content .fluid-engine {
+        margin: 0 48px;
+      }
+    }
+  }
+  .flickity-button {
+    background: rgba(227, 227, 227, 0.75);
+    &:focus {
+      box-shadow: 0 0 0 5px var(--bwGreen);
+    }
+  }
+  .flickity-page-dot {
+    background: rgba(28, 28, 28, 0.75);
+    &:focus {
+      box-shadow: 0 0 0 5px var(--bwGreen);
+    }
+  }
+}
+
+.sqs-search-page {
+  max-width: var(--bwMaxWidth);
+  margin: 0 auto;
+  .sqs-search-page-item {
+    .sqs-main-image-container {
+      flex-basis: 120px;
+      flex-shrink: 0;
+      width: auto;
+      float: none;
+      padding: 0;
+      .sqs-main-image-intrinsic,
+      .sqs-main-image,
+      img {
+        height: 100% !important;
+        width: 100% !important;
+        object-fit: cover;
+        padding: 0;
+      }
+    }
+    .sqs-content {
+      span em {
+        font-weight: 600;
+      }
+    }
+  }
+  .sqs-search-container-item {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+  }
+}
+
+.sqs-search-container-item .sqs-title {
+  font-weight: 300;
+  font-size: var(--heading-3-size);
+}
+
+.image-caption p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--bwWhite);
+  background: var(--bwBlue);
+  padding: 8px 16px;
+}
+
+.sqs-block-html a,
+.read-more-link,
+.entry-excerpt a,
+.blog-excerpt a,
+.eventlist-excerpt a,
+.sqs-block-newsletter .newsletter-form-header a,
+.sqs-block-newsletter .newsletter-form-footnote a,
+.sqs-block-newsletter .form-submission-text a,
+.sqs-block-form .form-submission-text a,
+.sqs-block-accordion .accordion-item__description a,
+.blog-item-author-profile-wrapper a .author-name,
+.eventlist-meta-address a.eventlist-meta-address-maplink,
+a.eventlist-title-link {
+  text-decoration: none !important;
+  border-bottom: solid 2px var(--bwGreen);
+  span {
+    text-decoration: none !important;
+  }
+  &:hover {
+    border-color: var(--bwBlue);
+  }
+}
+
+blockquote {
+  border-left-color: var(--bwGreen);
+  font-size: 0.9rem;
+  margin: 16px;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.blog-item-wrapper {
+  .blog-item-author-profile-wrapper {
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 16px;
+    border-radius: 8px;
+    background: var(--bwWhite);
+    box-shadow:
+      rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
+      rgba(0, 0, 0, 0.14) 0px 3px 4px 0px,
+      rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+    a {
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      align-items: center;
+      .author-avatar {
+        margin: 0;
+      }
+      .author-name {
+        margin: 0;
+        font-size: 1.1rem;
+      }
+    }
+    .author-bio p {
+      opacity: 0.7;
+      font-size: 0.85rem;
+      line-height: 1.4;
+    }
+  }
+}
+
+#footer-sections {
+  a {
+    border: 0;
+    &:hover {
+      color: var(--bwBlue);
+    }
+  }
+}
+
+/* Event list */
+
+.eventlist {
+  max-width: var(--bwMaxWidth);
+}
+
+.eventlist-column-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.eventlist-title {
+  width: 100%;
+  margin: 0 !important;
+  padding-bottom: 8px !important;
+  line-height: 1 !important;
+  font-size: 2.4rem !important;
+  a.eventlist-title-link {
+    display: block;
+    padding: 4px;
+  }
+}
+
+.eventlist-meta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  .eventlist-meta-item {
+    text-align: center;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    line-height: 1;
+    padding: 0.6rem 0.8rem;
+  }
+  .eventlist-meta-time {
+    background: var(--bwGreen);
+    color: var(--bwBlack);
+  }
+  .eventlist-meta-address {
+    background: var(--bwBlue);
+    color: var(--bwWhite);
+    a:hover {
+      border-color: var(--bwWhite);
+    }
+  }
+}
+
+.eventlist-description {
+  font-size: 1.1rem;
+  line-height: 1.3;
+  margin-bottom: 16px;
+}

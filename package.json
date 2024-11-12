@@ -1,6 +1,6 @@
 {
   "name": "bike-worcester-squarespace",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "Scripts and stylesheets for the Bike Worcester Squarespace site",
   "scripts": {
     "prebuild": "rm -rf dist/index.js",
@@ -8,7 +8,7 @@
     "build": "webpack --config webpack.config.js --mode production",
     "test": "jest",
     "watch": "concurrently -k \"npm run watch-src\" \"npm run serve-src\" \"npm run watch-html\" \"npm run serve-html\"",
-    "watch-src": "nodemon --watch src --exec \"npm run dev\" -e js,scss & ",
+    "watch-src": "nodemon --watch src --exec \"npm run dev\" -e js,css & ",
     "watch-html": "browser-sync start --config bs-config.js",
     "serve-src": "pnpm dlx serve -p 3001 dist",
     "serve-html": "pnpm dlx serve html/www.bikeworcester.org.uk",

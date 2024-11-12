@@ -3,7 +3,7 @@
 const { join } = require('path');
 
 const config = {
-  entry: ['./src/index.js', './src/index.scss'],
+  entry: ['./src/index.js', './src/index.css'],
   output: {
     path: join(__dirname, 'dist'),
     filename: 'index.js',
@@ -16,14 +16,13 @@ const config = {
         exclude: /node_modules/,
       },
       {
-        test: /\.scss$/,
+        test: /\.css/,
         use: [
           'style-loader',
           {
             loader: 'css-loader',
             options: { importLoaders: 1 },
           },
-          'sass-loader',
         ],
       },
       {
