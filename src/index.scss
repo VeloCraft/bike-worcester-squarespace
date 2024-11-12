@@ -1418,7 +1418,8 @@ nav.ProductItem-nav {
 .sqs-block-newsletter .form-submission-text a,
 .sqs-block-form .form-submission-text a,
 .sqs-block-accordion .accordion-item__description a,
-.blog-item-author-profile-wrapper a .author-name {
+.blog-item-author-profile-wrapper a .author-name,
+.eventlist-meta-address a.eventlist-meta-address-maplink {
   text-decoration: none !important;
   border-bottom: solid 2px var(--bwGreen);
   span {
@@ -1476,4 +1477,50 @@ blockquote {
       color: var(--bwBlue);
     }
   }
+}
+
+.eventlist-column-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.eventlist-title {
+  width: 100%;
+}
+
+.eventlist-meta {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  .eventlist-meta-item {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    line-height: 1;
+    padding: 0.4rem 0.6rem;
+  }
+  .eventlist-meta-time {
+    background: var(--bwGreen);
+    color: var(--bwBlack);
+  }
+  .eventlist-meta-address {
+    background: var(--bwBlue);
+    color: var(--bwWhite);
+    a:hover {
+      color: var(--bwWhite);
+    }
+  }
+}
+
+.eventlist-description {
+  font-size: 1.1rem;
+  line-height: 1.3;
+  margin-bottom: 16px;
 }
