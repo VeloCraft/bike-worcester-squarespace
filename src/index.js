@@ -27,7 +27,7 @@ const addQuoteCarousel = () => {
         )
         .join('');
       quoteSection.appendChild(carousel);
-      new Flickity(carousel, {
+      const flickity = new Flickity(carousel, {
         cellAlign: 'left',
         contain: true,
         wrapAround: true,
@@ -56,6 +56,8 @@ const addSearchToHeader = () => {
 };
 
 const addHeaderCarousel = () => {
+  const isEditing = document.querySelector('[data-is-editing="true"]');
+  if (isEditing) return;
   const headerSections = document.querySelectorAll(
     '.page-section .slide-contents'
   );
@@ -75,8 +77,8 @@ const addHeaderCarousel = () => {
   new Flickity(wrapper, {
     wrapAround: true,
     autoPlay: 5000,
-    pageDots: window.innerWidth <= 799,
-    prevNextButtons: window.innerWidth > 799,
+    pageDots: true,
+    prevNextButtons: false,
   });
 };
 
@@ -87,3 +89,5 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 window.addEventListener('load', () => {});
+
+console.log('ready');
