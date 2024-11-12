@@ -7,25 +7,8 @@
   --bwBlue: rgb(62 80 98);
   --bwBg: hsl(210 10% 80% / 1);
   --bwMaxWidth: 960px;
-}
-
-@mixin mobile {
-  @media only screen and (pointer: coarse) and (max-width: 1024px),
-    screen and (max-width: 799px) {
-    @content;
-  }
-}
-
-@mixin tagProduct($content, $color, $background) {
-  figure.grid-image,
-  .pdp-gallery-images,
-  section.ProductItem-gallery {
-    &:after {
-      background: $background;
-      content: $content;
-      color: $color;
-    }
-  }
+  --bwShadowLight: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
+    rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
 }
 
 .header-nav {
@@ -79,10 +62,7 @@
   aspect-ratio: 256 / 65;
   width: 148px;
   display: inline-block;
-  box-shadow:
-    rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
-    rgba(0, 0, 0, 0.14) 0px 3px 4px 0px,
-    rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+  box-shadow: var(--bwShadowLight);
 }
 
 .tweak-blog-item-show-author-name .blog-item-wrapper .blog-meta-item--author {
@@ -251,10 +231,7 @@ blockquote {
     padding: 16px;
     border-radius: 8px;
     background: var(--bwWhite);
-    box-shadow:
-      rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
-      rgba(0, 0, 0, 0.14) 0px 3px 4px 0px,
-      rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+    box-shadow: var(--bwShadowLight);
     a {
       box-sizing: border-box;
       display: flex;
@@ -290,6 +267,12 @@ blockquote {
 
 .eventlist {
   max-width: var(--bwMaxWidth);
+  .eventlist-event .eventlist-column-date {
+    display: inline-block;
+    .eventlist-datetag {
+      box-shadow: var(--bwShadowLight);
+    }
+  }
 }
 
 .eventlist-column-info {
@@ -306,7 +289,6 @@ blockquote {
   font-size: 2.4rem !important;
   a.eventlist-title-link {
     display: block;
-    padding: 4px;
   }
 }
 
