@@ -56,8 +56,7 @@ const addSearchToHeader = () => {
 };
 
 const addHeaderCarousel = () => {
-  const isEditing = document.querySelector('[data-is-editing="true"]');
-  if (isEditing) return;
+  if (window.self !== window.top) return;
   const headerSections = document.querySelectorAll(
     '.page-section .slide-contents'
   );
