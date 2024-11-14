@@ -38,10 +38,25 @@
   }
 }
 
-.sqs-block-summary-v2 .summary-title,
-.sqs-block-summary-v2 .summary-block-setting-text-size-medium .summary-title a {
-  font-size: 1.6rem;
-  font-weight: 400;
+.sqs-block-summary-v2 {
+  .summary-title,
+  .summary-block-setting-text-size-medium .summary-title {
+    a {
+      font-size: 1.4rem;
+      line-height: 1.2;
+      font-weight: 400;
+      text-align: left;
+    }
+  }
+  .summary-excerpt p {
+    font-size: 0.85rem;
+    opacity: 0.59;
+  }
+  .summary-block-setting-metadata-position-above-title.summary-block-setting-secondary-metadata-author
+    .summary-item-has-author
+    .summary-metadata-container {
+    margin-bottom: 4px;
+  }
 }
 
 /*
@@ -190,6 +205,7 @@
   font-size: var(--heading-3-size);
 }
 
+.image-caption,
 .image-caption p {
   margin: 0;
   font-size: 0.85rem;

@@ -74,8 +74,12 @@ const addHeaderCarousel = () => {
     wrapper.appendChild(headerCarousel);
   });
   new Flickity(wrapper, {
+    fade:
+      window.matchMedia(`(prefers-reduced-motion: reduce)`) === true ||
+      window.matchMedia(`(prefers-reduced-motion: reduce)`).matches === true,
     wrapAround: true,
     autoPlay: 5000,
+    pauseAutoPlayOnHover: true,
     pageDots: true,
     prevNextButtons: false,
   });
