@@ -80,6 +80,11 @@
   box-shadow: var(--bwShadowLight);
 }
 
+.view-item.collection-66e182f6e08e8c11d6fefc4e
+  .blog-meta-item.blog-meta-item--categories {
+  display: none;
+}
+
 .tweak-blog-item-show-author-name .blog-item-wrapper .blog-meta-item--author {
   display: none;
 }
@@ -208,6 +213,7 @@
 .image-caption,
 .image-caption p {
   margin: 0;
+  line-height: 1.5;
   font-size: 0.85rem;
   color: var(--bwWhite);
   background: var(--bwBlue);
