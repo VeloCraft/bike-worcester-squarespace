@@ -58,6 +58,7 @@ const addSearchToHeader = () => {
 };
 
 const addMegaMenu = () => {
+  if (window.self !== window.top) return;
   const isMobile = window.matchMedia('(max-width: 799px)').matches;
   if (isMobile) return;
   const container = document.querySelector(
