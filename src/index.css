@@ -109,8 +109,11 @@
   visibility: hidden;
 }
 
-// A looping carousel effect that slides from right to left
-// according to the number of children in the container
+/*
+ * A looping carousel effect that slides from right to left
+ * according to the number of children in the container
+*/
+
 @keyframes carousel {
   0% {
     transform: translateX(0);
@@ -120,12 +123,17 @@
   }
 }
 
-// Global Squarespace style fixes
+/* Global Squarespace style fixes */
+
 .squarespace-comments .comment-btn-wrapper {
   font-size: inherit;
+  .btn-text.preview-comment {
+    font-size: 1rem;
+  }
 }
 
-// Bike Buses
+/* Bike Buses */
+
 [data-section-id='66e7284ef767460e05aaa373'] {
   .blog-item-meta-wrapper,
   .blog-item-author-profile-wrapper {
