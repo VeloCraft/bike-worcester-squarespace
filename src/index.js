@@ -39,20 +39,43 @@ const addQuoteCarousel = () => {
 
 const addSearchToHeader = () => {
   const headerActions = {
-    desktop: document.querySelector('.header-actions--right .showOnDesktop'),
-    mobile: document.querySelector('.header-actions--right .showOnMobile'),
+    desktop: document.querySelector('.header-display-desktop .header-actions'),
+    mobile: document.querySelector('.header-display-mobile .header-burger'),
   };
   const searchLink = document.createElement('a');
   searchLink.href = '/search';
-  searchLink.className = 'search-link';
   const img = document.createElement('img');
   img.src =
     'https://assets.squarespace.com/universal/images-v6/icons/icon-searchqueries-32-light.png';
   img.alt = 'search icon';
   searchLink.appendChild(img);
-  const searchLinkClone = searchLink.cloneNode(true);
-  headerActions.desktop.appendChild(searchLink);
-  headerActions.mobile.appendChild(searchLinkClone);
+  const searchWrapper = document.createElement('div');
+  searchWrapper.className = 'search-link';
+  searchWrapper.appendChild(searchLink);
+  const searchWrapperClone = searchWrapper.cloneNode(true);
+  headerActions.desktop.prepend(searchWrapper);
+  headerActions.mobile.prepend(searchWrapperClone);
+};
+
+const addMegaMenu = () => {
+  const isMobile = window.matchMedia('(max-width: 799px)').matches;
+  if (isMobile) return;
+  const container = document.querySelector(
+    '.header-display-desktop .search-link'
+  );
+  if (!container) return;
+  const menuElement = document.querySelector(
+    '[data-section-id="673746954d70e03ea1eed9de"]'
+  );
+  if (!menuElement) return;
+  menuElement.setAttribute('id', 'mega-menu');
+  container.addEventListener('mouseenter', () => {
+    menuElement.classList.toggle('visible');
+  });
+  container.addEventListener('mouseleave', () => {
+    menuElement.classList.remove('visible');
+  });
+  container.prepend(menuElement);
 };
 
 const addHeaderCarousel = () => {
@@ -89,8 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
   addHeaderCarousel();
   addSearchToHeader();
   addQuoteCarousel();
+  addMegaMenu();
 });
 
 window.addEventListener('load', () => {});
-
-console.log('ready');
