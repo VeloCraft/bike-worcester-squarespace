@@ -63,7 +63,7 @@ const addHeaderCarousel = () => {
   if (!headerSections.length) return;
   const wrapper = document.createElement('div');
   wrapper.className = 'header-carousel';
-  document.getElementById('sections').appendChild(wrapper);
+  document.getElementById('sections').prepend(wrapper);
   headerSections.forEach((section, index) => {
     const headerCarousel = section.closest('.page-section');
     if (!headerCarousel) return;

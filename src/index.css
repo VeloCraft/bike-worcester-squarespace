@@ -49,7 +49,7 @@
     }
   }
   .summary-excerpt p {
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     opacity: 0.59;
   }
   .summary-block-setting-metadata-position-above-title.summary-block-setting-secondary-metadata-author
@@ -78,11 +78,6 @@
   width: 148px;
   display: inline-block;
   box-shadow: var(--bwShadowLight);
-}
-
-.view-item.collection-66e182f6e08e8c11d6fefc4e
-  .blog-meta-item.blog-meta-item--categories {
-  display: none;
 }
 
 .tweak-blog-item-show-author-name .blog-item-wrapper .blog-meta-item--author {
@@ -155,14 +150,14 @@
     }
   }
   .flickity-page-dots {
-    gap: 1.5rem;
+    gap: 1.2rem;
     height: 3rem;
     bottom: -3rem;
     align-items: center;
   }
   .flickity-page-dot {
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 1rem;
+    height: 1rem;
     box-sizing: border-box;
     margin: 0;
     background: rgba(28, 28, 28, 0.75);
@@ -173,6 +168,17 @@
   }
 }
 
+@media screen and (min-width: 786px) {
+  .header-carousel.flickity-enabled {
+    .flickity-page-dots {
+      gap: 1.5rem;
+    }
+    .flickity-page-dot {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
+}
 .sqs-search-page {
   max-width: var(--bwMaxWidth);
   margin: 0 auto;
