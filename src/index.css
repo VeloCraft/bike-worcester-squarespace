@@ -380,29 +380,31 @@ blockquote {
 }
 
 /* Mega menu */
-.search-link {
-  > a {
-    pointer-events: none;
-  }
-  #mega-menu {
-    position: fixed;
-    z-index: 1;
-    top: calc(2vw + 70px - 32px);
-    left: 0;
-    width: 100%;
-    box-shadow: var(--bwShadowMedium);
-    display: none;
-    &.visible {
-      display: block;
+@media screen and (min-width: 786px) {
+  .search-link {
+    > a {
+      pointer-events: none;
     }
-    .content-wrapper {
-      padding-top: 0;
-      margin-top: 32px;
-    }
-    a {
-      border-color: transparent;
-      &:hover {
-        border-color: var(--bwGreen);
+    #mega-menu {
+      position: fixed;
+      z-index: 1;
+      top: calc(2vw + 70px - 32px);
+      left: 0;
+      width: 100%;
+      box-shadow: var(--bwShadowMedium);
+      display: none;
+      &.visible {
+        display: block;
+      }
+      .content-wrapper {
+        padding-top: 0;
+        margin-top: 32px;
+      }
+      a {
+        border-color: transparent;
+        &:hover {
+          border-color: var(--bwGreen);
+        }
       }
     }
   }
