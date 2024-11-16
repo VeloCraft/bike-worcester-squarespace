@@ -9,10 +9,10 @@ Run `pnpm install` to install dependencies.
 
 ## Development
 
-Run `pnpm run scrape` to store a copy of the site to the `html` directory.
-Run `pnpm run dev` to run a local development server using the scrape site files, watch for changes and reload the injected scripts.
+Run `pnpm run sync` to store a copy of the site to the `html` directory. Alternatively, run `pnpm run sync pathname` to store a copy of a specific page and subpages.
+Run `pnpm run watch` to run a local development server using the site files, watch for changes and reload the injected scripts when changes are made.
 
-The project is built using Webpack. The entry point is `src/index.js` and the output is `dist/index.js` with all assets (including images and css) encoded as base64 strings and included in the output js file.
+The project is built using Webpack. The entry point is `src/index.js` and `src/index.css` and the output is compiled to `dist/index.js` with all assets (including images and css) encoded as base64 strings and included in the output js file.
 
 Push to `main` to trigger a fresh deployment to Vercel.
 
@@ -25,4 +25,5 @@ In the Squarespace sidebar, choose `Website > Pages > Website Tools > Code Injec
   type="text/javascript"
   src="https://bike-worcester-squarespace.vercel.app/index.js"
 ></script>
+-->
 ```
