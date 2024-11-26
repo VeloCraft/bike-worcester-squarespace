@@ -6,7 +6,7 @@ const config = {
   entry: ['./src/index.js', './src/index.css'],
   output: {
     path: join(__dirname, 'dist'),
-    filename: 'index.js',
+    filename: '[name].js',
   },
   module: {
     rules: [

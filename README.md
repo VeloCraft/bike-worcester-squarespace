@@ -25,5 +25,4 @@ In the Squarespace sidebar, choose `Website > Pages > Website Tools > Code Injec
   type="text/javascript"
   src="https://bike-worcester-squarespace.vercel.app/index.js"
 ></script>
--->
 ```
