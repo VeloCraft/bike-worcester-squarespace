@@ -1,6 +1,6 @@
 {
   "name": "bike-worcester-squarespace",
-  "version": "1.1.17",
+  "version": "1.1.18",
   "description": "Scripts and stylesheets for the Bike Worcester Squarespace site",
   "scripts": {
     "prebuild": "rm -rf dist/index.js",
@@ -21,26 +21,26 @@
   "author": "Al Pagan <generamics@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "@babel/preset-env": "^7.25.4",
+    "@babel/preset-env": "^7.26.9",
     "@types/flickity": "^2.2.11",
-    "babel-loader": "^9.2.0",
-    "concurrently": "^9.1.0",
+    "babel-loader": "^9.2.1",
+    "concurrently": "^9.1.2",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.0",
-    "eslint": "^9.11.1",
-    "husky": "^9.1.6",
+    "eslint": "^9.20.1",
+    "husky": "^9.1.7",
     "mini-css-extract-plugin": "^2.9.2",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.2",
     "postcss-loader": "^8.1.1",
-    "postcss-preset-env": "^10.1.1",
-    "prettier": "^3.3.3",
-    "puppeteer": "^23.3.1",
-    "sass": "^1.78.0",
-    "sass-loader": "^16.0.1",
+    "postcss-preset-env": "^10.1.4",
+    "prettier": "^3.5.1",
+    "puppeteer": "^23.11.1",
+    "sass": "^1.85.0",
+    "sass-loader": "^16.0.5",
     "style-loader": "^4.0.0",
-    "webpack": "^5.94.0",
+    "webpack": "^5.98.0",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0"
+    "webpack-dev-server": "^5.2.0"
   },
   "prettier": {
     "singleQuote": true,
@@ -48,6 +48,6 @@
   },
   "dependencies": {
     "flickity": "^3.0.0",
-    "nodemon": "^3.1.7"
+    "nodemon": "^3.1.9"
   }
 }

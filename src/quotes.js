@@ -17,6 +17,17 @@ const quotes = {
       author: 'Worcester MP Tom Collins, parent volunteer',
     },
   ],
+  bikeability: [
+    {
+      quote: `It was a great session, even for an old timer like myself, there was still lots to learn about taking positions on the road to manage other road users.  I've definitely taken lessons from this into my real world cycling.  Martin was a great trainer.  Would highly recommend to beginners and experience cyclists alike.`,
+    },
+    {
+      quote: `What a fantastic and informative session! It has increased my confidence to cycle on those busy roads, how to check breaks individually, and increased my knowledge about the cycling attire that will make you more visible on the road. 10/10 would recommend to anyone who is a beginner or as a refresher to a seasoned cyclist, as safety rules and new ways of staying save are constantly evolving.`,
+    },
+    {
+      quote: `I definitely learned a few things from Martin, even as a confident cyclist. His session made me think about scenarios on the road that I wouldn't have thought about previously, which has (hopefully) made me a safer cyclist. His tips on road positioning and and making eye contact with drivers to make sure they have seen you were the biggest takeaways for me.`,
+    },
+  ],
 };
 
 export default quotes;
