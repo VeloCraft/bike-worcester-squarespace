@@ -1,3 +1,4 @@
+import './index.css';
 import Flickity from 'flickity';
 import quotes from './quotes';
 

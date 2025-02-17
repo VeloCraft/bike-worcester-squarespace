@@ -1,13 +1,16 @@
 /* global require, __dirname, module */
 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { join } = require('path');
 
 const config = {
-  entry: ['./src/index.js', './src/index.css'],
+  entry: './src/index.js', // Only one entry point: your JS file
+
   output: {
     path: join(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: 'index.js',
   },
+
   module: {
     rules: [
       {
@@ -18,7 +21,7 @@ const config = {
       {
         test: /\.css/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: { importLoaders: 1 },
@@ -28,9 +31,19 @@ const config = {
       {
         test: /\.svg|\.jpg|\.png$/,
         type: 'asset',
+        generator: {
+          // Add this to configure output filename for assets
+          filename: 'assets/[name][ext][query]', // Or any pattern you want
+        },
       },
     ],
   },
+
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: 'index.css', // Creates index.css and styles.css
+    }),
+  ],
 };
 
 module.exports = config;
