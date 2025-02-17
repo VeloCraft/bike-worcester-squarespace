@@ -20,14 +20,14 @@ const addQuoteCarousel = () => {
                 <blockquote data-animation-role="quote">
                   <span>“</span>${quote}<span>”</span>
                 </blockquote>
-                <figcaption class="source">— ${author}</figcaption>
+                ${author ? `<figcaption class="source">— ${author}</figcaption>` : ''}
               </figure>
             </div>
           `
         )
         .join('');
       quoteSection.appendChild(carousel);
-      const flickity = new Flickity(carousel, {
+      new Flickity(carousel, {
         cellAlign: 'left',
         contain: true,
         wrapAround: true,
