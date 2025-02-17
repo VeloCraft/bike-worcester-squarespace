@@ -28,6 +28,52 @@ const quotes = {
       quote: `I definitely learned a few things from Martin, even as a confident cyclist. His session made me think about scenarios on the road that I wouldn't have thought about previously, which has (hopefully) made me a safer cyclist. His tips on road positioning and and making eye contact with drivers to make sure they have seen you were the biggest takeaways for me.`,
     },
   ],
+  bikerecycling: [
+    {
+      quote: `My son uses this daily for his paper round and at a weekend to cycle to town to see friends. It is a lovely bike and no problems since we picked it up. I'm sure we will be back when he grows again.`,
+      author: 'Claire',
+    },
+    {
+      quote: `The bike was a birthday present for my son, he loves it and wants to go on it all the time!`,
+      author: 'Ross',
+    },
+    {
+      quote: `Since getting my bike from Bike Worcester I’ve used it nearly every day for getting to work, the gym, shopping, meeting friends, well everything!`,
+      autor: 'Anita',
+    },
+    {
+      quote: `The bike was for a Ukrainian guy, we were hosting him and his mother for a while, they are now living independently. He uses his bike for college and fitness training.`,
+      author: 'Anthony',
+    },
+    {
+      quote: `I gifted the bike to my niece who lives on the edge of the city. She can't drive so uses it for shopping and getting into town.`,
+      author: 'Miles',
+    },
+    {
+      quote: `I am really grateful for my new bike. I had just accepted a new job, on the Royal Worcestershire Hospital site, where I knew the parking and traffic could be difficult.`,
+      author: 'Bob',
+    },
+    {
+      quote: `The bikes have been fantastic! We have been out on a number of family bike rides with them (hopefully more when the weather is more favourable).`,
+      author: 'Adam',
+    },
+    {
+      quote: `We have been very thankful for the two bikes we had from you before Christmas. These were given to our two foster children for Christmas.`,
+      author: 'Linda',
+    },
+    {
+      quote: `Hi the bike is absolutely fantastic I am using it to commute to work at my care job every day and it's made the ride so much more pleasant and enjoyable.`,
+      author: 'Tom',
+    },
+    {
+      quote: `I'm very happy with the recycled bike we purchased. We never tried the tagalong bike before so it was a great opportunity for us to give it a go for a little cost.`,
+      author: 'Magdalena',
+    },
+    {
+      quote: `My son uses his bike for daily commuting to and from school, the park, socialising with friends and bike rides with me.`,
+      author: 'Pete',
+    },
+  ],
 };
 
 export default quotes;
