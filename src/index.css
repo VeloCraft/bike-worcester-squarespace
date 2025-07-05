@@ -319,6 +319,7 @@ blockquote {
 /* Event list */
 
 .eventlist {
+  max-width: var(--bwMaxWidth);
   .eventlist-event {
     .eventlist-column-date {
       display: inline-block;
@@ -332,7 +333,7 @@ blockquote {
   }
 }
 
-.eventlist-event:nth-child(n + 4) {
+.events-collapsed .eventlist-event:nth-child(n + 4) {
   display: none;
 }
 

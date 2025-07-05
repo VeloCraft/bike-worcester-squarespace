@@ -117,4 +117,38 @@ document.addEventListener('DOMContentLoaded', () => {
   addMegaMenu();
 });
 
-window.addEventListener('load', () => {});
+const addShowMoreButton = () => {
+  const eventList = document.querySelector('.eventlist');
+  if (!eventList) return;
+
+  const events = eventList.querySelectorAll('.eventlist-event');
+  if (events.length <= 3) return;
+
+  eventList.classList.add('events-collapsed');
+
+  const showMoreButton = document.createElement('button');
+  showMoreButton.textContent = 'Show more';
+  showMoreButton.classList.add(
+    'sqs-block-button-element--medium',
+    'sqs-button-element--primary',
+    'sqs-block-button-element'
+  );
+
+  const buttonContainer = document.createElement('div');
+  buttonContainer.classList.add(
+    'sqs-block-button-container',
+    'sqs-block-button-container--center'
+  );
+  buttonContainer.appendChild(showMoreButton);
+
+  events[2].after(buttonContainer);
+
+  showMoreButton.addEventListener('click', () => {
+    eventList.classList.remove('events-collapsed');
+    buttonContainer.remove();
+  });
+};
+
+window.addEventListener('load', () => {
+  addShowMoreButton();
+});
