@@ -54,8 +54,8 @@ const addSearchToHeader = () => {
   searchWrapper.className = 'search-link';
   searchWrapper.appendChild(searchLink);
   const searchWrapperClone = searchWrapper.cloneNode(true);
-  headerActions.desktop.prepend(searchWrapper);
-  headerActions.mobile.prepend(searchWrapperClone);
+  if (headerActions.desktop) headerActions.desktop.prepend(searchWrapper);
+  if (headerActions.mobile) headerActions.mobile.prepend(searchWrapperClone);
 };
 
 const addMegaMenu = () => {
@@ -86,9 +86,14 @@ const addHeaderCarousel = () => {
     '.page-section .slide-contents'
   );
   if (!headerSections.length) return;
+  // Squarespace no longer renders a '#sections' wrapper. Insert the carousel
+  // where the first hero section lives so it stays with its siblings.
+  const firstSection = headerSections[0].closest('.page-section');
+  const container = firstSection && firstSection.parentElement;
+  if (!container) return;
   const wrapper = document.createElement('div');
   wrapper.className = 'header-carousel';
-  document.getElementById('sections').prepend(wrapper);
+  container.prepend(wrapper);
   headerSections.forEach((section, index) => {
     const headerCarousel = section.closest('.page-section');
     if (!headerCarousel) return;
