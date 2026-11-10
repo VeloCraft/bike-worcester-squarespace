@@ -141,9 +141,12 @@ function main(argv) {
     process.exit(1);
   });
 
-  server.listen(port, '127.0.0.1', () => {
+  server.listen(port, () => {
+    // All interfaces, like browser-sync: the loop is routinely used by someone
+    // SSH'd in from another machine, whose browser is not on this host. Binding
+    // loopback would serve the mirror but leave it loading no bundle there.
     process.stdout.write(
-      `Serving ${path.relative(process.cwd(), root) || '.'} (${leg}) at http://localhost:${port}/\n`
+      `Serving ${path.relative(process.cwd(), root) || '.'} (${leg}) at http://localhost:${port}/ (and on this host's LAN address)\n`
     );
   });
 

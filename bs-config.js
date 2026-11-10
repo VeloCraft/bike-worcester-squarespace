@@ -22,11 +22,31 @@ const { mirror, bundle } = ports();
 // The working build, served by `serve-src` (`node scripts/serve.js bundle dist`)
 // while `pnpm run watch` runs. The mirror's injection point is rewritten to this
 // URL so edits under `src/` show up in the mirror after a reload, with no push and
-// no deploy. BUNDLE_URL points the mirror at another bundle origin (the dev
-// preview, say) without editing this tracked file; the locally served build is the
-// default.
-const BUNDLE_URL =
-  process.env.BUNDLE_URL || `http://localhost:${bundle}/index.js`;
+// no deploy.
+//
+// The origin is taken from the request, not from this machine: the bundle is
+// fetched by whoever's browser loaded the mirror, so `localhost` only works when
+// that browser is on this machine. Anyone reaching the mirror over the LAN (a
+// developer SSH'd in from another box, a phone on the same network) gets the
+// bundle URL on the same host they used, and it resolves for them rather than for
+// the server. BUNDLE_URL overrides it with an absolute URL — another bundle origin
+// such as the dev preview, which needs no host rewriting at all.
+const BUNDLE_URL = process.env.BUNDLE_URL || null;
+
+function bundleUrlFor(req) {
+  if (BUNDLE_URL) return BUNDLE_URL;
+
+  const host = req.headers.host || `localhost:${mirror}`;
+  let hostname;
+  try {
+    // `URL` keeps the brackets on an IPv6 literal, which a bare `split(':')`
+    // would mangle.
+    hostname = new URL(`http://${host}`).hostname;
+  } catch {
+    hostname = 'localhost';
+  }
+  return `http://${hostname}:${bundle}/index.js`;
+}
 
 // Every *remote* copy of the override bundle the mirrored markup can reference:
 // the production bundle on Vercel (and any preview alias of the same project), the
@@ -51,10 +71,10 @@ const REMOTE_BUNDLE =
 //   2. point every remote bundle reference at the working build.
 const HTTP_URL = /"http:\/\/(?!localhost[:/])/g;
 
-function rewriteBundleUrls(html) {
+function rewriteBundleUrls(html, bundleUrl) {
   return html
     .replace(HTTP_URL, '"https://')
-    .replace(REMOTE_BUNDLE, () => `"${BUNDLE_URL}"`);
+    .replace(REMOTE_BUNDLE, () => `"${bundleUrl}"`);
 }
 
 // Rewrites html responses as they are served; every other content type passes
@@ -92,7 +112,10 @@ function serveWorkingBundle(req, res, next) {
       chunks.push(toBuffer(chunk, encoding));
 
     const body = Buffer.from(
-      rewriteBundleUrls(Buffer.concat(chunks).toString('utf8')),
+      rewriteBundleUrls(
+        Buffer.concat(chunks).toString('utf8'),
+        bundleUrlFor(req)
+      ),
       'utf8'
     );
     // The rewrite changes the byte count, so the static server's content-length

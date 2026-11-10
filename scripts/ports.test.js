@@ -74,7 +74,8 @@ test('check names the legs that are busy', async () => {
 
 // Runs one response through browser-sync's rewrite middleware and returns the
 // body it actually served.
-function rewrite(config, html, headers = { 'content-type': 'text/html' }) {
+function rewrite(config, html, host = `localhost:${ports().mirror}`) {
+  const headers = { 'content-type': 'text/html', host };
   const served = {};
   const res = {
     getHeader: (name) => headers[name],
@@ -90,7 +91,7 @@ function rewrite(config, html, headers = { 'content-type': 'text/html' }) {
   const [middleware] = config.middleware;
   // The middleware only wraps `write`/`end`; it always hands on to the static
   // server, which is what actually writes the bytes.
-  middleware({ method: 'GET', url: '/' }, res, () => {});
+  middleware({ method: 'GET', url: '/', headers }, res, () => {});
   res.write(Buffer.from(html));
   res.end();
   return served.body;
@@ -120,6 +121,38 @@ test('the mirror loads the working bundle from the bundle leg', () => {
   assert.ok(
     body.includes(`http://localhost:${expected.bundle}/index.js`),
     `the bundle URL should be derived from the base port, got: ${body}`
+  );
+});
+
+// The bundle is fetched by the browser that loaded the mirror, so the host must be
+// the one that browser used. Hard-coding localhost served nothing to anyone working
+// over the LAN.
+test('the bundle URL keeps the host the mirror was reached on', () => {
+  const config = require('../bs-config');
+  const expected = ports();
+  const html =
+    '<script src="https://bike-worcester-squarespace.vercel.app/index.js"></script>';
+
+  assert.ok(
+    rewrite(config, html, `192.168.1.252:${expected.mirror}`).includes(
+      `"http://192.168.1.252:${expected.bundle}/index.js"`
+    )
+  );
+  assert.ok(
+    rewrite(config, html, `dev-box.local:${expected.mirror}`).includes(
+      `"http://dev-box.local:${expected.bundle}/index.js"`
+    )
+  );
+  // IPv6 literals keep their brackets.
+  assert.ok(
+    rewrite(config, html, `[::1]:${expected.mirror}`).includes(
+      `"http://[::1]:${expected.bundle}/index.js"`
+    )
+  );
+
+  // Nothing to parse: fall back to localhost rather than emit a broken URL.
+  assert.ok(
+    rewrite(config, html, '').includes(`http://localhost:${expected.bundle}`)
   );
 });
 

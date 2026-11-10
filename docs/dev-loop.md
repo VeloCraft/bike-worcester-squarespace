@@ -67,6 +67,18 @@ DEV_PORT_BASE=4750 pnpm run watch   # mirror 4750, bundle 4751, pristine 4752
 
 `pnpm run ports` prints the reservation you would get.
 
+### Reaching the loop from another machine
+
+All three legs bind every interface, not loopback, so the loop is usable from a browser
+that is not on this host — SSH'd in from a laptop, a phone on the same network. Use this
+machine's LAN address instead of `localhost`: browser-sync prints it as **External** when
+the loop starts, and it is the address the other machine needs for the mirror.
+
+The bundle URL written into the mirror follows the host you loaded the page on — load
+`http://<lan-ip>:4747/events7401.html` and the markup asks for
+`http://<lan-ip>:4748/index.js`, not `localhost:4748`. `localhost` would be _your_
+machine, not the one running the loop, and the mirror would render with no bundle at all.
+
 ## 3. Verify in the mirror
 
 Open <http://localhost:4747>, edit `src/index.css` or `src/index.js`, save, and the page
