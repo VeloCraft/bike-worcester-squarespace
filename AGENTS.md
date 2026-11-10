@@ -14,4 +14,4 @@ Before touching styles or injected DOM, read `docs/dev-loop.md`: sync the mirror
 
 ### Domain docs
 
-Single-context: `GLOSSARY.md` + `docs/adr/` at repo root. See `docs/agents/domain.md`.
+Single-context: `GLOSSARY.md` (canonical terms) + `docs/adr/` (decisions, from `0001`) at repo root. See `docs/agents/domain.md`.
