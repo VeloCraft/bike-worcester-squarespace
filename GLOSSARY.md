@@ -42,9 +42,11 @@ against a stale mirror is verified against markup that may no longer exist.
 ## Dev loop
 
 The working cycle for a change: refresh the mirror, run the watch, verify the change in
-the mirror, deploy deliberately, then look at the live page. The watch (also "the watch
-loop") is the rebuild-and-reload step inside the dev loop, not another name for the whole
-cycle. The dev loop is how a change gets from "do this" to "it is live".
+the mirror, deploy deliberately, pass the gate by looking at the dev preview (in a
+logged-in browser) before it reaches production, then look at the live page. The watch
+(also "the watch loop") is the rebuild-and-reload step inside the dev loop, not another
+name for the whole cycle. The dev loop is how a change gets from "do this" to "it is
+live".
 
 ## Gate
 

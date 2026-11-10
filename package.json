@@ -12,7 +12,7 @@
     "watch-src": "nodemon --watch src --exec \"npm run dev\" -e js,css & ",
     "watch-html": "browser-sync start --config bs-config.js",
     "serve-src": "pnpm dlx serve -p 3001 dist",
-    "serve-html": "pnpm dlx serve html/www.bikeworcester.org.uk",
+    "serve-html": "pnpm dlx serve -p 3002 html/www.bikeworcester.org.uk",
     "sync": "sh scripts/sync.sh",
     "prepare": "husky",
     "commit-version-change": "git add package.json"
@@ -24,6 +24,7 @@
     "@babel/preset-env": "^7.26.9",
     "@types/flickity": "^2.2.11",
     "babel-loader": "^9.2.1",
+    "browser-sync": "^3.0.3",
     "concurrently": "^9.1.2",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.0",

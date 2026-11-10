@@ -24,6 +24,19 @@ Rebuilds `dist/index.js` on every change under `src/`, serves the mirror at
 <http://localhost:3000>, and reloads the page when the rebuilt bundle changes. Leave it
 running for the whole task.
 
+How the bundle reaches the mirror, since the snapshot's injection point still names the
+production bundle:
+
+- `watch-src` rebuilds `dist/index.js`.
+- `serve-src` serves that build at <http://localhost:3001/index.js> (`serve -p 3001 dist`).
+- `watch-html` runs browser-sync on <http://localhost:3000>, serving
+  `html/www.bikeworcester.org.uk`, and rewrites every remote bundle reference in the served
+  markup to the `BUNDLE_URL` origin (`bs-config.js`). It defaults to
+  <http://localhost:3001/index.js>, so no tunnel or proxy is needed: browser-sync serves the
+  page, `serve-src` serves the bundle.
+- `serve-html` is a plain, unrewritten copy of the snapshot on <http://localhost:3002> for
+  comparison; it is deliberately on a different port from browser-sync.
+
 ## 3. Verify in the mirror
 
 Open <http://localhost:3000>, edit `src/index.css` or `src/index.js`, save, and the page
@@ -68,8 +81,9 @@ position (ADR [0001](adr/0001-preview-gated-delivery-human-gate.md),
 The mirror is for fast iteration, not for the protected preview: it loads the locally built
 bundle by default, and `BUNDLE_URL` (see `bs-config.js`) points it at another bundle origin
 without editing tracked files, e.g.
-`BUNDLE_URL=https://<dev preview alias>/index.js pnpm run watch`. A protected alias still needs a
-logged-in browser, so opening the alias itself is what the gate does.
+`BUNDLE_URL=https://<unprotected bundle origin>/index.js pnpm run watch`. The dev preview
+is protected (ADR 0002), so the mirror cannot fetch its bundle anonymously — opening the
+alias itself in a logged-in browser is what the gate does.
 
 ## 7. Eyeball the live page
 

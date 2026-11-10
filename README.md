@@ -37,20 +37,22 @@ pnpm run watch
 
 That runs four jobs under `concurrently -k`, so stopping one stops them all:
 
-| job          | what it does                                                          | where                                                |
-| ------------ | --------------------------------------------------------------------- | ---------------------------------------------------- |
-| `watch-src`  | nodemon watches `src/` and rebuilds the bundle (webpack, dev mode)    | writes `dist/index.js`                               |
-| `serve-src`  | serves that build                                                     | <http://localhost:3001>                              |
-| `watch-html` | browser-sync serves the mirror and reloads it when the bundle changes | <http://localhost:3000>                              |
-| `serve-html` | serves the snapshot's raw files with no rewriting                     | only needed to compare against the pristine snapshot |
+| job          | what it does                                                          | where                                         |
+| ------------ | --------------------------------------------------------------------- | --------------------------------------------- |
+| `watch-src`  | nodemon watches `src/` and rebuilds the bundle (webpack, dev mode)    | writes `dist/index.js`                        |
+| `serve-src`  | serves that build                                                     | <http://localhost:3001>                       |
+| `watch-html` | browser-sync serves the mirror and reloads it when the bundle changes | <http://localhost:3000>                       |
+| `serve-html` | serves the snapshot's raw files with no rewriting                     | <http://localhost:3002> (pristine comparison) |
 
 Browse **<http://localhost:3000>**. The snapshot's injection point loads the _production_
 bundle from Vercel, and `bs-config.js` rewrites every remote bundle reference in the served
 markup to the working build at <http://localhost:3001/index.js> — the one `serve-src` is
 serving. That rewrite is how an edit reaches the mirror at all. To point the mirror at
-another bundle origin instead (the `dev` preview, say), set `BUNDLE_URL`, e.g.
-`BUNDLE_URL=https://<dev preview alias>/index.js pnpm run watch`; the local build stays the
-default and nothing tracked has to change.
+another bundle origin instead, set `BUNDLE_URL`, e.g.
+`BUNDLE_URL=https://<unprotected bundle origin>/index.js pnpm run watch`; the local build
+stays the default and nothing tracked has to change. The dev preview is protected
+([ADR 0002](docs/adr/0002-preview-deployment-protection.md)), so the mirror cannot fetch its
+bundle anonymously — open the preview alias in a logged-in browser for the gate instead.
 
 So the loop is: edit `src/index.css` or `src/index.js`, the rebuild writes `dist/index.js`,
 browser-sync reloads the page, and the change is there after the reload. No push, no deploy.
