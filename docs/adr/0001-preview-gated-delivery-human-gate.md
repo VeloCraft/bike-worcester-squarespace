@@ -25,7 +25,7 @@ Verification is therefore a question of process: who looks at what, and when.
 Delivery topology:
 
 - **`dev` is the integration branch.** Work is integrated there first. Merging to `dev`
-  deploys a **dev preview**: a real, non-public deployment of the override bundle built
+  deploys a **dev preview**: a real, unlisted deployment of the override bundle built
   from `dev`.
 - **Merging `dev` into `main` deploys production automatically.** `main` is what visitors
   get; there is no separate release step and no manual promotion.

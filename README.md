@@ -49,10 +49,10 @@ bundle from Vercel, and `bs-config.js` rewrites every remote bundle reference in
 markup to the working build at <http://localhost:3001/index.js> — the one `serve-src` is
 serving. That rewrite is how an edit reaches the mirror at all. To point the mirror at
 another bundle origin instead, set `BUNDLE_URL`, e.g.
-`BUNDLE_URL=https://<unprotected bundle origin>/index.js pnpm run watch`; the local build
-stays the default and nothing tracked has to change. The dev preview is protected
-([ADR 0002](docs/adr/0002-preview-deployment-protection.md)), so the mirror cannot fetch its
-bundle anonymously — open the preview alias in a logged-in browser for the gate instead.
+`BUNDLE_URL=https://<bundle origin>/index.js pnpm run watch`; the local build stays the
+default and nothing tracked has to change. The dev preview is not protected
+([ADR 0002](docs/adr/0002-preview-deployment-protection.md)), so the mirror can be pointed
+straight at it — that is the gate, and it is still a human looking at a page.
 
 So the loop is: edit `src/index.css` or `src/index.js`, the rebuild writes `dist/index.js`,
 browser-sync reloads the page, and the change is there after the reload. No push, no deploy.
@@ -64,11 +64,10 @@ separate webpack build — `pnpm run build-css` — and is not part of the watch
 ### Branch topology
 
 - **`dev` is the integration branch.** Work is committed to an agent branch and merged into
-  `dev`; that merge deploys a **dev preview**, a real but non-public deployment built from
-  `dev`. The preview is the gate: open it in a logged-in browser and check the change at
-  desktop and mobile widths before it is allowed near production. Deployment Protection
-  stays on, so it cannot be fetched anonymously
-  ([ADR 0002](docs/adr/0002-preview-deployment-protection.md)).
+  `dev`; that merge deploys a **dev preview**, a real but unlisted deployment built from
+  `dev`. The preview is the gate: load it and check the change at desktop and mobile widths
+  before it is allowed near production. Deployment Protection is off, so it loads without a
+  login ([ADR 0002](docs/adr/0002-preview-deployment-protection.md)).
 - **Merging `dev` into `main` deploys production automatically.** There is no separate
   release step and no manual promotion, so nothing goes to `main` before it has been looked
   at on the preview.
@@ -80,8 +79,8 @@ against the mirror is real verification of layout and injected DOM, and of nothi
 ## Deployment
 
 The live site has one injection point and it loads the **production bundle** only — never
-a preview, never a local build. The `dev` preview is a separate, non-public deployment: it
-is not injected into the site, and it is opened by its own alias as the pre-merge gate (see
+a preview, never a local build. The `dev` preview is a separate, unlisted deployment: it
+is not injected into the site, and it is loaded by its own alias as the pre-merge gate (see
 `docs/dev-loop.md` and
 [ADR 0002](docs/adr/0002-preview-deployment-protection.md)).
 

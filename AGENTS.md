@@ -10,7 +10,7 @@ Default labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-huma
 
 ### Dev loop
 
-Before touching styles or injected DOM, read `docs/dev-loop.md`: sync the mirror, run the watch loop, verify in the mirror, merge to `dev` (preview), pass the gate by looking at the preview alias in a logged-in browser, then merge to `main` (production).
+Before touching styles or injected DOM, read `docs/dev-loop.md`: sync the mirror, run the watch loop, verify in the mirror, merge to `dev` (preview), pass the gate by looking at the preview alias, then merge to `main` (production).
 
 ### Domain docs
 

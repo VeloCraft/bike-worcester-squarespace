@@ -57,8 +57,8 @@ snapshot.
 ## 5. Deploy deliberately
 
 - Commit on your agent branch and open a PR into `dev`.
-- Merging to `dev` deploys a **dev preview**. Nothing is public yet; the preview is the
-  gate.
+- Merging to `dev` deploys a **dev preview**. Nothing reaches the live site yet; the
+  preview is the gate.
 - Do not merge `dev` into `main` until the gate in step 6 has been run.
 
 Never commit straight to `main`.
@@ -69,21 +69,26 @@ The gate is a human looking at the **dev preview**; nothing automated stands in 
 position (ADR [0001](adr/0001-preview-gated-delivery-human-gate.md),
 [0002](adr/0002-preview-deployment-protection.md)). Run it the same way every time:
 
-1. **Open the `dev` preview alias in a logged-in browser.** Deployment Protection stays on,
-   so the preview is non-public and cannot be fetched anonymously (ADR 0002). Log in to the
-   Vercel project, then open the `dev` alias.
+1. **Open the `dev` preview alias.** Deployment Protection is off, so the alias loads in any
+   browser with no login (ADR 0002). It is public but unlisted, so nothing secret belongs in
+   the bundle. Anything else that can fetch a URL — `curl`, the mirror — can fetch it too.
 2. **Check the changed page(s) at desktop and mobile widths.** Confirm the override bundle
    is actually loaded and that layout and injected DOM look right against the real
    Squarespace markup. The verification bar matches the mirror's — layout and injected DOM
    only; forms, members and search are out of scope.
 3. **Then merge `dev` into `main`**, which deploys production automatically.
 
-The mirror is for fast iteration, not for the protected preview: it loads the locally built
-bundle by default, and `BUNDLE_URL` (see `bs-config.js`) points it at another bundle origin
-without editing tracked files, e.g.
-`BUNDLE_URL=https://<unprotected bundle origin>/index.js pnpm run watch`. The dev preview
-is protected (ADR 0002), so the mirror cannot fetch its bundle anonymously — opening the
-alias itself in a logged-in browser is what the gate does.
+The mirror loads the locally built bundle by default, and `BUNDLE_URL` (see `bs-config.js`)
+points it at another bundle origin without editing tracked files. Because the preview is
+not protected (ADR 0002), the mirror can be pointed straight at the artifact that will
+ship:
+
+```sh
+BUNDLE_URL=https://bike-worcester-squarespace-git-dev-velocraft.vercel.app/index.js pnpm run watch
+```
+
+That is the strongest form of the gate — the exact deployed bundle rendered against real
+markup — and it is still a human looking at a page, not a check that can pass on its own.
 
 ## 7. Eyeball the live page
 

@@ -27,10 +27,11 @@ and not the build shown on a preview.
 
 ## Dev preview
 
-A non-public deployment of the override bundle, built from the integration branch and
+An unlisted deployment of the override bundle, built from the integration branch and
 reachable by its own address. It is a real deployment rather than a local copy, so it
 shows the change as it would ship, but it is not the site visitors see. It exists to be
-looked at before a change becomes production.
+looked at before a change becomes production. Unlisted, not private: anyone holding the
+address can load it, and search engines are asked not to index it.
 
 ## Freshness
 
@@ -42,11 +43,10 @@ against a stale mirror is verified against markup that may no longer exist.
 ## Dev loop
 
 The working cycle for a change: refresh the mirror, run the watch, verify the change in
-the mirror, deploy deliberately, pass the gate by looking at the dev preview (in a
-logged-in browser) before it reaches production, then look at the live page. The watch
-(also "the watch loop") is the rebuild-and-reload step inside the dev loop, not another
-name for the whole cycle. The dev loop is how a change gets from "do this" to "it is
-live".
+the mirror, deploy deliberately, pass the gate by looking at the dev preview before it
+reaches production, then look at the live page. The watch (also "the watch loop") is the
+rebuild-and-reload step inside the dev loop, not another name for the whole cycle. The dev
+loop is how a change gets from "do this" to "it is live".
 
 ## Gate
 
