@@ -11,7 +11,91 @@
  |
  |
  */
+// The working build, served by `serve-src` (`serve -p 3001 dist`) while
+// `pnpm run watch` runs. The mirror's injection point is rewritten to this URL so
+// edits under `src/` show up in the mirror after a reload, with no push and no
+// deploy. BUNDLE_URL points the mirror at another bundle origin (the dev preview,
+// say) without editing this tracked file; the locally served build is the default.
 const BUNDLE_URL = process.env.BUNDLE_URL || 'http://localhost:3001/index.js';
+
+// Every *remote* copy of the override bundle the mirrored markup can reference:
+// the production bundle on Vercel (and any preview alias of the same project), the
+// older generamics.co.uk deployments (secondhome, home — both dead, which is why
+// they are matched by domain rather than by hostname), and a stale plain-http copy
+// of any of them. `https?` because the http-normalising rule below may already have
+// upgraded one, and a snapshot can carry either scheme. All of them resolve to the
+// locally served working build, so no mirrored page can load a bundle the dev loop
+// does not serve.
+const REMOTE_BUNDLE =
+  /"https?:\/\/(?:bike-worcester-squarespace(?:-[a-z0-9-]+)*\.vercel\.app|(?:[a-z0-9-]+\.)*generamics\.co\.uk)\/index\.js"/g;
+
+// The mirror serves files (`server`), not a proxied site, and browser-sync's own
+// `rewriteRules` option only ever applies to proxied responses — configured here it
+// silently did nothing, so the mirrored page kept loading the remote bundle and no
+// local edit could ever reach it. The rules run over html responses in a middleware
+// instead (see `serveWorkingBundle` below). Order is part of the contract:
+//   1. normalise the snapshot's plain-http asset links to https, skipping localhost —
+//      this must run BEFORE the bundle rule, or it would upgrade the plain-http local
+//      bundle URL to https://localhost:3001, which the local `serve` (no TLS) cannot
+//      answer, and the mirror would load no bundle at all;
+//   2. point every remote bundle reference at the working build.
+const HTTP_URL = /"http:\/\/(?!localhost[:/])/g;
+
+function rewriteBundleUrls(html) {
+  return html
+    .replace(HTTP_URL, '"https://')
+    .replace(REMOTE_BUNDLE, () => `"${BUNDLE_URL}"`);
+}
+
+// Rewrites html responses as they are served; every other content type passes
+// straight through, untouched.
+function serveWorkingBundle(req, res, next) {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+
+  const chunks = [];
+  const write = res.write.bind(res);
+  const end = res.end.bind(res);
+  // Decided on the first write, by which point the static server has set the
+  // response's content type.
+  let buffering = null;
+
+  const isHtml = () =>
+    String(res.getHeader('content-type') || '').includes('text/html');
+  const toBuffer = (chunk, encoding) =>
+    Buffer.isBuffer(chunk)
+      ? chunk
+      : Buffer.from(chunk, typeof encoding === 'string' ? encoding : 'utf8');
+
+  res.write = function (chunk, encoding, callback) {
+    if (buffering === null) buffering = isHtml();
+    if (!buffering) return write(chunk, encoding, callback);
+    if (chunk) chunks.push(toBuffer(chunk, encoding));
+    const done = typeof encoding === 'function' ? encoding : callback;
+    if (typeof done === 'function') process.nextTick(done);
+    return true;
+  };
+
+  res.end = function (chunk, encoding, callback) {
+    if (buffering === null) buffering = isHtml();
+    if (!buffering) return end(chunk, encoding, callback);
+    if (chunk && typeof chunk !== 'function')
+      chunks.push(toBuffer(chunk, encoding));
+
+    const body = Buffer.from(
+      rewriteBundleUrls(Buffer.concat(chunks).toString('utf8')),
+      'utf8'
+    );
+    // The rewrite changes the byte count, so the static server's content-length
+    // would truncate the page at the old length.
+    if (res.getHeader('content-length') !== undefined) {
+      res.setHeader('content-length', body.length);
+    }
+    const done = typeof chunk === 'function' ? chunk : callback;
+    return end(body, done);
+  };
+
+  next();
+}
 
 module.exports = {
   ui: false,
@@ -26,7 +110,7 @@ module.exports = {
   server: 'html/www.bikeworcester.org.uk',
   proxy: false,
   port: 3000,
-  middleware: false,
+  middleware: [serveWorkingBundle],
   serveStatic: [],
   ghostMode: false,
   logLevel: 'info',
@@ -34,22 +118,6 @@ module.exports = {
   logConnections: false,
   logFileChanges: true,
   logSnippet: true,
-  rewriteRules: [
-    {
-      // The snapshot's injection point points at the production bundle host.
-      // Rewrite it to BUNDLE_URL so the mirror loads whichever bundle is under
-      // test: the local build by default, or a dev preview alias when set.
-      match:
-        /"https:\/\/(?:bike-worcester-squarespace(?:-[a-z0-9-]+)*\.vercel\.app|secondhome\.generamics\.co\.uk)\/index\.js"/g,
-      fn: () => `"${BUNDLE_URL}"`,
-    },
-    {
-      // Leave http origins alone (e.g. the local bundle served on :3001);
-      // only the mirrored absolute asset links need upgrading to https.
-      match: /\"http:\/\/(?!localhost[:/])/g,
-      fn: () => '"https://',
-    },
-  ],
   open: false,
   browser: 'default',
   cors: false,
