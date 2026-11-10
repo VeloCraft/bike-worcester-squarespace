@@ -277,13 +277,39 @@ blockquote {
 }
 
 .blog-item-wrapper {
+  /*
+   * Blog post author card (issue #6)
+   *
+   * Squarespace's newer 7.1 blog-item layouts lay the article column out as a
+   * start-aligned flex/grid container and re-declare this card's horizontal
+   * margins from a `.tweak-blog-item-*` context, which defeats the `margin: 0
+   * auto` this rule used to rely on: auto margins only centre a box whose
+   * parent hands it the leftover space, and a start-aligned flex/grid item
+   * never gets any. Re-assert the auto margins on the card itself (with
+   * !important, to beat the newer rule's specificity) and additionally centre
+   * it as a flex item (`align-self`) and as a grid item (`justify-self`), so
+   * the card is centred in the article column for every tweak variant, at
+   * desktop and mobile widths alike.
+   */
   .blog-item-author-profile-wrapper {
     max-width: 320px;
-    margin: 0 auto;
-    padding: 16px;
-    border-radius: 8px;
-    background: var(--bwWhite);
-    box-shadow: var(--bwShadowLight);
+    margin-left: auto !important;
+    margin-right: auto !important;
+    align-self: center;
+    justify-self: center;
+    /*
+     * The box styles live on the card itself (never on a shared parent, which
+     * would shift other blocks) and are guarded by :not(:empty) so a post
+     * whose author profile renders empty — or a section that hides the card,
+     * such as the Bike Buses section below — paints no band, shadow or
+     * padding and adds no spacing.
+     */
+    &:not(:empty) {
+      padding: 16px;
+      border-radius: 8px;
+      background: var(--bwWhite);
+      box-shadow: var(--bwShadowLight);
+    }
     a {
       box-sizing: border-box;
       display: flex;
