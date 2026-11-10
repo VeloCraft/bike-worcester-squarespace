@@ -714,10 +714,19 @@ blockquote {
   color: rgb(28 28 28 / 0.4);
 }
 
-/* Next / previous event: navigation, so a hairline and small caps, no box. */
+/* Next / previous event: navigation, so a hairline and small caps, no box.
+   The track is a full-width flex row, not a block: the platform puts
+   `margin-right: auto` on the previous link and `margin-left: auto` on the
+   next one, which only spreads them to either end while their container is a
+   flex container. Without it the links stack up against the left edge and the
+   strip looks as wide as its contents. */
 .cdk-section[data-definition-name='website.components.eventsItem']
   #itemPagination {
-  display: block;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
   margin: 56px 0 0;
   padding: 20px 0 0;
   background: none;
@@ -727,7 +736,7 @@ blockquote {
 .cdk-section[data-definition-name='website.components.eventsItem']
   .events-item
   .item-pagination-link {
-  display: inline-flex;
+  display: flex;
   align-items: baseline;
   gap: 12px;
   padding: 0;
