@@ -61,4 +61,40 @@ is worse than no mirror. A second loop takes a different reservation (a differen
 The checkpoint a change must pass before it reaches production. In this repository the
 gate is the dev preview looked at by a human; no automated check stands in that position.
 Passing the gate is a judgement that the change looks right, not proof that it cannot
-break.
+break. It gates the override bundle only: the platform's own content is not deployed, so
+it never passes through here.
+
+## Site event
+
+An event on the site's own events collection: a page the platform serves, with its own
+title, artwork, slug and writing. It is the site's curated record of an event, not a copy
+of anything in a calendar.
+_Avoid_: listing, entry, post
+
+## Calendar event
+
+One dated occurrence in a Bike Worcester Google Calendar (Public or Community). Plenty of
+them never become site events, and a series has no single calendar event at all.
+_Avoid_: event, unqualified
+
+## Entry run
+
+One human-approved pass that reads both sides, proposes a shortlist, and creates the
+approved site events as drafts. It starts when a person asks for it, never on a schedule,
+and it only ever adds.
+_Avoid_: sync, import, mirror, automation
+
+## House title
+
+The title the site uses for a kind of event, as opposed to the wording the calendar uses
+for the same thing: `Critical Mass Cycle Ride - September 2026` for the calendar's
+`Critical Mass`. Internal status in square brackets (`[CONFIRMED]`, `[LEAD: Al]`) is not
+part of it.
+_Avoid_: normalised title, canonical name
+
+## Collapsed series
+
+A repeating activity (weekly Bike Recycling, monthly Critical Mass) reduced to its next
+dated instance, so the listing names it once instead of once per occurrence. It is a
+shortlisting rule applied before proposing, not an object on the site.
+_Avoid_: recurring event
