@@ -18,7 +18,11 @@ See `docs/dev-loop.md` for the full fix-and-ship loop. In short: `dev` deploys a
 
 ## Deployment
 
-Production is what the live site loads; the `dev` preview is only a pre-merge gate and is not injected into the site.
+The live site has one injection point and it loads the **production bundle** only — never
+a preview, never a local build. The `dev` preview is a separate, non-public deployment: it
+is not injected into the site, and it is opened by its own alias as the pre-merge gate (see
+`docs/dev-loop.md` and
+[ADR 0002](docs/adr/0002-preview-deployment-protection.md)).
 
 In the Squarespace sidebar, choose `Website > Pages > Website Tools > Code Injection` and paste the following code into the `Header` section:
 

@@ -11,6 +11,8 @@
  |
  |
  */
+const BUNDLE_URL = process.env.BUNDLE_URL || 'http://localhost:3001/index.js';
+
 module.exports = {
   ui: false,
   files: 'dist/index.js',
@@ -34,11 +36,17 @@ module.exports = {
   logSnippet: true,
   rewriteRules: [
     {
-      match: /\"https:\/\/bike-worcester-squarespace.vercel.app\/index.js\"/g,
-      fn: () => '"https://secondhome.generamics.co.uk/index.js"',
+      // The snapshot's injection point points at the production bundle host.
+      // Rewrite it to BUNDLE_URL so the mirror loads whichever bundle is under
+      // test: the local build by default, or a dev preview alias when set.
+      match:
+        /"https:\/\/(?:bike-worcester-squarespace(?:-[a-z0-9-]+)*\.vercel\.app|secondhome\.generamics\.co\.uk)\/index\.js"/g,
+      fn: () => `"${BUNDLE_URL}"`,
     },
     {
-      match: /\"http:\/\//g,
+      // Leave http origins alone (e.g. the local bundle served on :3001);
+      // only the mirrored absolute asset links need upgrading to https.
+      match: /\"http:\/\/(?!localhost[:/])/g,
       fn: () => '"https://',
     },
   ],

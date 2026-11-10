@@ -10,8 +10,8 @@ Default labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-huma
 
 ### Dev loop
 
-Before touching styles or injected DOM, read `docs/dev-loop.md`: sync the mirror, run the watch loop, verify in the mirror, then deploy via `dev` (preview) to `main` (production).
+Before touching styles or injected DOM, read `docs/dev-loop.md`: sync the mirror, run the watch loop, verify in the mirror, merge to `dev` (preview), pass the gate by looking at the preview alias in a logged-in browser, then merge to `main` (production).
 
 ### Domain docs
 
-Single-context: `GLOSSARY.md` (canonical terms) + `docs/adr/` (decisions, from `0001`) at repo root. See `docs/agents/domain.md`.
+Single-context: `GLOSSARY.md` (canonical terms) + `docs/adr/` (decisions, from `0001` on) at repo root. See `docs/agents/domain.md`.

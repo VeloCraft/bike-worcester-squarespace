@@ -44,13 +44,36 @@ snapshot.
 ## 5. Deploy deliberately
 
 - Commit on your agent branch and open a PR into `dev`.
-- Merging to `dev` deploys a **preview**. Nothing is public yet; the preview is the gate.
-- Merge `dev` into `main` to deploy **production** automatically.
+- Merging to `dev` deploys a **dev preview**. Nothing is public yet; the preview is the
+  gate.
+- Do not merge `dev` into `main` until the gate in step 6 has been run.
 
 Never commit straight to `main`.
 
-## 6. Eyeball the live page
+## 6. Gate before merging to `main`
+
+The gate is a human looking at the **dev preview**; nothing automated stands in that
+position (ADR [0001](adr/0001-preview-gated-delivery-human-gate.md),
+[0002](adr/0002-preview-deployment-protection.md)). Run it the same way every time:
+
+1. **Open the `dev` preview alias in a logged-in browser.** Deployment Protection stays on,
+   so the preview is non-public and cannot be fetched anonymously (ADR 0002). Log in to the
+   Vercel project, then open the `dev` alias.
+2. **Check the changed page(s) at desktop and mobile widths.** Confirm the override bundle
+   is actually loaded and that layout and injected DOM look right against the real
+   Squarespace markup. The verification bar matches the mirror's — layout and injected DOM
+   only; forms, members and search are out of scope.
+3. **Then merge `dev` into `main`**, which deploys production automatically.
+
+The mirror is for fast iteration, not for the protected preview: it loads the locally built
+bundle by default, and `BUNDLE_URL` (see `bs-config.js`) points it at another bundle origin
+without editing tracked files, e.g.
+`BUNDLE_URL=https://<dev preview alias>/index.js pnpm run watch`. A protected alias still needs a
+logged-in browser, so opening the alias itself is what the gate does.
+
+## 7. Eyeball the live page
 
 After the production deploy, load <https://www.bikeworcester.org.uk> and confirm the
 override bundle is actually live. If it is not, check that the Squarespace Code
-Injection header still loads the production bundle (README → Deployment).
+Injection header still loads the **production bundle and only the production bundle**
+(README → Deployment). The dev preview is never injected into the site.
