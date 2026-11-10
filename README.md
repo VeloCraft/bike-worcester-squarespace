@@ -14,9 +14,11 @@ Run `pnpm run watch` to run a local development server using the site files, wat
 
 The project is built using Webpack. The entry point is `src/index.js` and `src/index.css` and the output is compiled to `dist/index.js` with all assets (including images and css) encoded as base64 strings and included in the output js file.
 
-Push to `main` to trigger a fresh deployment to Vercel.
+See `docs/dev-loop.md` for the full fix-and-ship loop. In short: `dev` deploys a preview, and merging `dev` to `main` deploys production automatically.
 
 ## Deployment
+
+Production is what the live site loads; the `dev` preview is only a pre-merge gate and is not injected into the site.
 
 In the Squarespace sidebar, choose `Website > Pages > Website Tools > Code Injection` and paste the following code into the `Header` section:
 

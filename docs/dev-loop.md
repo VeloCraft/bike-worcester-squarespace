@@ -1,0 +1,56 @@
+# Dev loop: fix and ship
+
+The single source for taking a style or script change from "do this" to "it is live".
+Needs `httrack` and `pnpm install` (see README).
+
+## 1. Refresh the mirror
+
+The mirror is a static copy of the live site in `html/`, served locally while we work.
+
+```sh
+pnpm run sync            # whole site
+pnpm run sync pathname   # one page and its subpages
+```
+
+Re-sync when the page has moved on: the snapshot is only as fresh as the last sync.
+
+## 2. Run the watch loop
+
+```sh
+pnpm run watch
+```
+
+Rebuilds `dist/index.js` on every change under `src/`, serves the mirror at
+<http://localhost:3000>, and reloads the page when the rebuilt bundle changes. Leave it
+running for the whole task.
+
+## 3. Verify in the mirror
+
+Open <http://localhost:3000>, edit `src/index.css` or `src/index.js`, save, and the page
+reloads with your change. No push, no deploy, no waiting.
+
+**Verification bar: layout and injected DOM only.** Local verification tells you the
+stylesheet and script do what you meant against the current Squarespace markup.
+Squarespace API behaviour, forms, members and search are **out of scope** — they cannot
+be exercised in the mirror, so do not claim to have verified them.
+
+## 4. Discover selectors against the live page
+
+The mirror is a snapshot, so a selector you need may be missing or out of date. Read the
+live DOM at <https://www.bikeworcester.org.uk> (devtools) to confirm the real structure
+and class names — never guess them, and re-sync (step 1) rather than hand-patching the
+snapshot.
+
+## 5. Deploy deliberately
+
+- Commit on your agent branch and open a PR into `dev`.
+- Merging to `dev` deploys a **preview**. Nothing is public yet; the preview is the gate.
+- Merge `dev` into `main` to deploy **production** automatically.
+
+Never commit straight to `main`.
+
+## 6. Eyeball the live page
+
+After the production deploy, load <https://www.bikeworcester.org.uk> and confirm the
+override bundle is actually live. If it is not, check that the Squarespace Code
+Injection header still loads the production bundle (README → Deployment).
