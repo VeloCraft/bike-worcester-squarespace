@@ -15,9 +15,7 @@
     "watch-html": "browser-sync start --config bs-config.js",
     "serve-src": "node scripts/serve.js bundle dist",
     "serve-html": "node scripts/serve.js pristine html/www.bikeworcester.org.uk",
-    "sync": "sh scripts/sync.sh",
-    "prepare": "husky",
-    "commit-version-change": "git add package.json"
+    "sync": "sh scripts/sync.sh"
   },
   "keywords": [],
   "author": "Al Pagan <generamics@gmail.com>",
@@ -31,7 +29,6 @@
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.0",
     "eslint": "^9.20.1",
-    "husky": "^9.1.7",
     "mini-css-extract-plugin": "^2.9.2",
     "postcss": "^8.5.2",
     "postcss-loader": "^8.1.1",
