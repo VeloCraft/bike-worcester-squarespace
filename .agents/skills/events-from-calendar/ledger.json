@@ -15,7 +15,7 @@
       "url": "/events/november-2026-repair-cafe",
       "startDate": "2026-11-14T11:00:00Z",
       "created": "2026-11-10",
-      "status": "draft"
+      "status": "published"
     },
     {
       "series": "critical-mass",
@@ -23,7 +23,7 @@
       "url": "/events/critical-mass-cycle-ride-november-2026",
       "startDate": "2026-11-21T10:30:00Z",
       "created": "2026-11-10",
-      "status": "draft"
+      "status": "published"
     }
   ]
 }
