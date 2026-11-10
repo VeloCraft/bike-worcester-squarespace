@@ -357,18 +357,42 @@ blockquote {
 .eventlist-meta {
   display: flex;
   flex-direction: row;
+  /* Let badges wrap onto a new row in narrow columns (single event page)
+     rather than forcing the row wider than its container. */
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
+  /* No fixed widths, so a single badge can never exceed the viewport. */
+  max-width: 100%;
+  row-gap: 0.4rem;
+  /* The meta row must not be a scroll container: keep it visible so any
+     overflow is handled by wrapping, never by an internal scrollbar. */
+  overflow: visible !important;
   .eventlist-meta-item {
+    box-sizing: border-box;
+    /* Allow the badge to shrink inside its flex row instead of pushing the
+       row (and the page) wider than the viewport on mobile. */
+    min-width: 0;
+    max-width: 100%;
+    /* Squarespace's updated defaults override our padding, leaving the text
+       flush against the pill edge. Restore symmetric padding on all sides. */
+    padding: 0.6rem 0.8rem !important;
     text-align: center;
     font-size: 0.85rem;
     text-transform: uppercase;
     font-weight: 700;
     white-space: nowrap;
-    overflow-x: hidden;
+    /* `hidden` (deliberately not `auto`) clips the ellipsis without ever
+       creating an internal scrollbar on the badge. */
+    overflow: hidden !important;
     text-overflow: ellipsis;
     line-height: 1;
-    padding: 0.6rem 0.8rem;
+    /* Inner containers (e.g. the date/time/address wrappers) are not scroll
+       containers either. */
+    & > * {
+      max-width: 100%;
+      overflow: visible !important;
+    }
   }
   .eventlist-meta-time {
     background: var(--bwGreen);
