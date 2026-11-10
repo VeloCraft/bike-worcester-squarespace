@@ -67,8 +67,13 @@ Ignore anything already started.
 ## 4. Curate before proposing
 
 Present the collapsed candidate list and let the human cut it down. Default: one row per activity,
-the next occurrence. Offer a **max** (the save-the-date poster caps at 7 rows) and say what gets
+the next occurrence. Offer a **max** — the save-the-date poster caps at 7 rows — and say what gets
 dropped past it.
+
+The site has **no shared shortlist file**. The approved proposal *is* the shortlist for that run.
+Do not read the save-the-date repo's `events.selected.json`: it holds dated instances under a
+7-row layout cap, regenerated for one print, and letting it govern the site would import both the
+cap and the staleness. The only thing that persists between runs is the ledger (section 8).
 
 Do not treat the current "Other events" Google Calendar embed on `/events` as coverage — it is being
 removed, so a series still needs a page. But neither does every occurrence need one.
@@ -115,6 +120,38 @@ Re-take a snapshot after every save — the editor re-creates its overlays and u
 On a failed save: **stop the run**, report. Never create a second copy to "fix" the first. A wrong
 event is undone with `Item options` → `Delete`.
 
+## 8. Keep the ledger; supersede only your own pages
+
+A **collapsed series** gets one page per date, and create-only cannot move it to the next date. The
+ledger is the one exception, and it is narrow: a run may replace a page **it created itself**, never
+one a human made.
+
+After each save, append to `ledger.json` (next to this file):
+
+```json
+{ "series": "bike-recycling", "title": "Bike Recycling", "url": "/events/bike-recycling",
+  "startDate": "2026-11-11T19:20:00Z", "created": "2026-11-10", "status": "draft" }
+```
+
+`series` is the collapsed-series key, so the next run can find its predecessor. Set `status` to
+`published` in a later run rather than trusting the create step.
+
+When a run proposes an instance of a series that the ledger already has with a **past** `startDate`,
+the proposal row says `replaces: /events/<old>` and names the ledger entry. The human's approval of
+that row covers the replacement — no separate permission is needed, and no replacement happens for a
+row that was cut.
+
+Replace in this order, never the reverse:
+
+1. create the new page (draft) and verify it — the platform gives it `<slug>-1` because the old one
+   still holds the slug;
+2. delete the old page (`Item options` → `Delete`), confirming its URL matches the ledger entry;
+3. set the new page's `EVENT URL` to the now-free slug, so `/events/bike-recycling` keeps pointing
+   at the current instance;
+4. mark the old ledger entry `superseded` and append the new one.
+
+A page that is not in the ledger is never touched, whatever its title or how wrong it looks.
+
 ## Stop conditions
 
 - Not logged into Squarespace → stop, ask for the login (see `references/setup.md`).
@@ -125,6 +162,7 @@ event is undone with `Item options` → `Delete`.
 
 - `references/editor.md` — the verified editor walkthrough (also covers login).
 - `references/setup.md` — browser profile and login, the one human-only step.
+- `ledger.json` — the site events this skill created, and may therefore supersede.
 
 ## Vocabulary
 

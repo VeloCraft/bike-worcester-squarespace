@@ -1,0 +1,29 @@
+{
+  "note": "Site events created by an entry run, and nothing else. A run may supersede (create a newer instance, then delete) a page listed here. A page that is not listed here is never touched. Edit by hand only to correct a mistake; never add a page a human made.",
+  "entries": [
+    {
+      "series": "bike-recycling",
+      "title": "Bike Recycling",
+      "url": "/events/bike-recycling",
+      "startDate": "2026-11-11T19:20:00Z",
+      "created": "2026-11-10",
+      "status": "draft"
+    },
+    {
+      "series": "repair-cafe",
+      "title": "November Repair Cafe",
+      "url": "/events/november-2026-repair-cafe",
+      "startDate": "2026-11-14T11:00:00Z",
+      "created": "2026-11-10",
+      "status": "draft"
+    },
+    {
+      "series": "critical-mass",
+      "title": "Critical Mass Cycle Ride - November 2026",
+      "url": "/events/critical-mass-cycle-ride-november-2026",
+      "startDate": "2026-11-21T10:30:00Z",
+      "created": "2026-11-10",
+      "status": "draft"
+    }
+  ]
+}

@@ -69,9 +69,11 @@ delete at content a human made.
 
 - Content changes can no longer be assumed to have come from a person at a keyboard, and a run's
   output is reviewed as a proposal rather than as a diff.
-- A stale series page has no owner: collapse-to-next-instance is right when proposing and wrong
-  once the date passes, and create-only cannot replace it. Whether a run may supersede pages it
-  created itself (a ledger) or must never create series pages at all is **not yet decided**; until
-  it is, series pages are a human's to replace.
+- A stale series page has no owner by default: collapse-to-next-instance is right when proposing and
+  wrong once the date passes, and create-only cannot replace it. Decided: a run keeps a **ledger** of
+  the pages it created and may supersede only those — create the newer instance, verify it, delete
+  its own predecessor, and keep the URL. A page that is not in the ledger is never touched.
+- The site has no shared shortlist with the save-the-date poster. The approved proposal is the
+  shortlist for one run; only the ledger persists between runs.
 - The shared login and the browser profile are part of the process, and the honest description of
   the process says so.
