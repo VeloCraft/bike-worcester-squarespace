@@ -11,12 +11,22 @@
  |
  |
  */
-// The working build, served by `serve-src` (`serve -p 3001 dist`) while
-// `pnpm run watch` runs. The mirror's injection point is rewritten to this URL so
-// edits under `src/` show up in the mirror after a reload, with no push and no
-// deploy. BUNDLE_URL points the mirror at another bundle origin (the dev preview,
-// say) without editing this tracked file; the locally served build is the default.
-const BUNDLE_URL = process.env.BUNDLE_URL || 'http://localhost:3001/index.js';
+const { ports } = require('./scripts/ports');
+
+// One reservation for the whole loop; see `scripts/ports.js`. The mirror is the
+// base port, the working build base + 1, the pristine copy base + 2. Every port
+// here is derived, never typed twice, and browser-sync is made strict below: a
+// busy port stops the loop instead of moving it.
+const { mirror, bundle } = ports();
+
+// The working build, served by `serve-src` (`node scripts/serve.js bundle dist`)
+// while `pnpm run watch` runs. The mirror's injection point is rewritten to this
+// URL so edits under `src/` show up in the mirror after a reload, with no push and
+// no deploy. BUNDLE_URL points the mirror at another bundle origin (the dev
+// preview, say) without editing this tracked file; the locally served build is the
+// default.
+const BUNDLE_URL =
+  process.env.BUNDLE_URL || `http://localhost:${bundle}/index.js`;
 
 // Every *remote* copy of the override bundle the mirrored markup can reference:
 // the production bundle on Vercel (and any preview alias of the same project), the
@@ -36,8 +46,8 @@ const REMOTE_BUNDLE =
 // instead (see `serveWorkingBundle` below). Order is part of the contract:
 //   1. normalise the snapshot's plain-http asset links to https, skipping localhost —
 //      this must run BEFORE the bundle rule, or it would upgrade the plain-http local
-//      bundle URL to https://localhost:3001, which the local `serve` (no TLS) cannot
-//      answer, and the mirror would load no bundle at all;
+//      bundle URL to https://localhost:<bundle port>, which the local static server
+//      (no TLS) cannot answer, and the mirror would load no bundle at all;
 //   2. point every remote bundle reference at the working build.
 const HTTP_URL = /"http:\/\/(?!localhost[:/])/g;
 
@@ -109,7 +119,12 @@ module.exports = {
   },
   server: 'html/www.bikeworcester.org.uk',
   proxy: false,
-  port: 3000,
+  port: mirror,
+  // A one-port range. `getEmptyPort` scans from `min` up to `max` and grabs the
+  // first free port it finds, so browser-sync's default of "increment until
+  // something answers" is what put the mirror on an undocumented port before. If
+  // the mirror port is taken, browser-sync stops instead of drifting.
+  ports: { min: mirror, max: mirror },
   middleware: [serveWorkingBundle],
   serveStatic: [],
   ghostMode: false,

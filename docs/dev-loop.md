@@ -21,25 +21,55 @@ pnpm run watch
 ```
 
 Rebuilds `dist/index.js` on every change under `src/`, serves the mirror at
-<http://localhost:3000>, and reloads the page when the rebuilt bundle changes. Leave it
+<http://localhost:4747>, and reloads the page when the rebuilt bundle changes. Leave it
 running for the whole task.
 
 How the bundle reaches the mirror, since the snapshot's injection point still names the
 production bundle:
 
 - `watch-src` rebuilds `dist/index.js`.
-- `serve-src` serves that build at <http://localhost:3001/index.js> (`serve -p 3001 dist`).
-- `watch-html` runs browser-sync on <http://localhost:3000>, serving
+- `serve-src` serves that build at <http://localhost:4748/index.js>.
+- `watch-html` runs browser-sync on <http://localhost:4747>, serving
   `html/www.bikeworcester.org.uk`, and rewrites every remote bundle reference in the served
   markup to the `BUNDLE_URL` origin (`bs-config.js`). It defaults to
-  <http://localhost:3001/index.js>, so no tunnel or proxy is needed: browser-sync serves the
-  page, `serve-src` serves the bundle.
-- `serve-html` is a plain, unrewritten copy of the snapshot on <http://localhost:3002> for
+  <http://localhost:4748/index.js>, so no tunnel or proxy is needed: browser-sync serves
+  the page, `serve-src` serves the bundle.
+- `serve-html` is a plain, unrewritten copy of the snapshot on <http://localhost:4749> for
   comparison; it is deliberately on a different port from browser-sync.
+
+### Ports
+
+The three ports are one reservation, decided in `scripts/ports.js` and stated here — and
+nowhere else in the repository:
+
+| leg            | port | why                                             |
+| -------------- | ---- | ----------------------------------------------- |
+| mirror         | 4747 | browser-sync; this is the URL you browse        |
+| working bundle | 4748 | served by `serve-src`, loaded by the mirror     |
+| pristine copy  | 4749 | served by `serve-html`, for side-by-side checks |
+
+4747 rather than 3000 on purpose. `3000` is what every other project on a machine takes
+first, and this machine runs several agents at once: a dev loop that expects `3000` free is
+a dev loop that is broken whenever something else is running.
+
+**The loop never moves to another port.** Before anything starts, `node scripts/ports.js
+--check` tests all three and, if one is taken, stops the whole loop and names the port and
+the process holding it. Both static servers refuse to bind elsewhere, and browser-sync is
+given a one-port range so it cannot fall forward to the next free port the way it used to.
+A busy port is a stopped loop with a message, never a mirror on an undocumented URL.
+
+To run a second loop — another agent, another worktree — give it a different base, not a
+different port:
+
+```sh
+DEV_PORT_BASE=4750 pnpm run watch   # mirror 4750, bundle 4751, pristine 4752
+```
+
+`pnpm run ports` prints the reservation you would get.
 
 ## 3. Verify in the mirror
 
-Open <http://localhost:3000>, edit `src/index.css` or `src/index.js`, save, and the page
+Open <http://localhost:4747>, edit `src/index.css` or `src/index.js`, save, and the page
 reloads with your change. No push, no deploy, no waiting.
 
 **Verification bar: layout and injected DOM only.** Local verification tells you the

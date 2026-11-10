@@ -48,6 +48,14 @@ reaches production, then look at the live page. The watch (also "the watch loop"
 rebuild-and-reload step inside the dev loop, not another name for the whole cycle. The dev
 loop is how a change gets from "do this" to "it is live".
 
+## Port reservation
+
+The fixed set of ports the watch binds, derived from a single base port and written down
+in `docs/dev-loop.md`. A reservation rather than a preference: the loop stops when a port
+in it is taken instead of moving to another one, because a mirror on an undocumented port
+is worse than no mirror. A second loop takes a different reservation (a different
+`DEV_PORT_BASE`), so two loops on one machine cannot collide.
+
 ## Gate
 
 The checkpoint a change must pass before it reaches production. In this repository the

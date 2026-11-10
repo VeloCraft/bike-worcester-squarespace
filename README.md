@@ -37,18 +37,24 @@ pnpm run watch
 
 That runs four jobs under `concurrently -k`, so stopping one stops them all:
 
-| job          | what it does                                                          | where                                         |
-| ------------ | --------------------------------------------------------------------- | --------------------------------------------- |
-| `watch-src`  | nodemon watches `src/` and rebuilds the bundle (webpack, dev mode)    | writes `dist/index.js`                        |
-| `serve-src`  | serves that build                                                     | <http://localhost:3001>                       |
-| `watch-html` | browser-sync serves the mirror and reloads it when the bundle changes | <http://localhost:3000>                       |
-| `serve-html` | serves the snapshot's raw files with no rewriting                     | <http://localhost:3002> (pristine comparison) |
+| job          | what it does                                                          | where                   |
+| ------------ | --------------------------------------------------------------------- | ----------------------- |
+| `watch-src`  | nodemon watches `src/` and rebuilds the bundle (webpack, dev mode)    | writes `dist/index.js`  |
+| `serve-src`  | serves that build                                                     | the working-bundle port |
+| `watch-html` | browser-sync serves the mirror and reloads it when the bundle changes | the mirror port         |
+| `serve-html` | serves the snapshot's raw files with no rewriting                     | the pristine-copy port  |
 
-Browse **<http://localhost:3000>**. The snapshot's injection point loads the _production_
-bundle from Vercel, and `bs-config.js` rewrites every remote bundle reference in the served
-markup to the working build at <http://localhost:3001/index.js> — the one `serve-src` is
-serving. That rewrite is how an edit reaches the mirror at all. To point the mirror at
-another bundle origin instead, set `BUNDLE_URL`, e.g.
+Browse the mirror. The loop prints its URL when it starts, and it is fixed rather than
+chosen at startup: the ports are one reservation stated in
+[`docs/dev-loop.md`](docs/dev-loop.md#ports), and `pnpm run ports` prints it. The loop is on
+a deliberately uncommon base port because `3000` is the first thing anything else on the
+machine grabs, and it stops rather than moving if a port is busy. Running a second loop
+means a different base (`DEV_PORT_BASE=4750 pnpm run watch`), never a different port.
+
+The snapshot's injection point loads the _production_ bundle from Vercel, and
+`bs-config.js` rewrites every remote bundle reference in the served markup to the working
+build — the one `serve-src` is serving. That rewrite is how an edit reaches the mirror at
+all. To point the mirror at another bundle origin instead, set `BUNDLE_URL`, e.g.
 `BUNDLE_URL=https://<bundle origin>/index.js pnpm run watch`; the local build stays the
 default and nothing tracked has to change. The dev preview is not protected
 ([ADR 0002](docs/adr/0002-preview-deployment-protection.md)), so the mirror can be pointed
