@@ -507,9 +507,12 @@ blockquote {
   padding: 0;
 }
 
+/* The clearfix divs are empty and meaningless outside the platform's float
+   layout. The content footer is NOT hidden: on some events it carries a
+   "Source:" link (e.g. repair-cafe-worcester), and that is content. */
 .cdk-section[data-definition-name='website.components.eventsItem']
   .events-item
-  :is(.clear, .eventitem-content-footer) {
+  .clear {
   display: none;
 }
 
