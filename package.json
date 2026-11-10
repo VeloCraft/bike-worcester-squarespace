@@ -8,6 +8,7 @@
     "build": "webpack --config webpack.config.js --mode production",
     "build-css": "webpack --config webpack.recycling.config.js --mode production",
     "test": "node --test",
+    "check:css": "node scripts/check-flat-css.js",
     "ports": "node scripts/ports.js",
     "watch": "node scripts/ports.js --check && concurrently -k -n src,bundle,mirror,raw \"npm run watch-src\" \"npm run serve-src\" \"npm run watch-html\" \"npm run serve-html\"",
     "watch-src": "nodemon --watch src --exec \"npm run dev\" -e js,css",

@@ -25,6 +25,22 @@ const config = {
             loader: 'css-loader',
             options: { importLoaders: 1 },
           },
+          {
+            // Flatten the nesting our stylesheets use into plain selectors, so the
+            // overrides still apply in browsers without native CSS nesting. Same
+            // plugin and options as webpack.recycling.config.js.
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  require('postcss-preset-env')({
+                    stage: 0,
+                    features: { 'nesting-rules': true },
+                  }),
+                ],
+              },
+            },
+          },
         ],
       },
       {

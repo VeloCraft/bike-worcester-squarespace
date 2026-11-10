@@ -89,6 +89,35 @@ stylesheet and script do what you meant against the current Squarespace markup.
 Squarespace API behaviour, forms, members and search are **out of scope** — they cannot
 be exercised in the mirror, so do not claim to have verified them.
 
+### CSS nesting is flattened at build time
+
+`src/index.css` is written with native CSS nesting (`&` rules). Visitors on
+Chrome < 112, Safari < 16.5 or Firefox < 117 do not support it, and a browser drops
+the **whole** nested rule it does not understand — those visitors would see none of
+the fixes this bundle exists for. So the build runs the stylesheet through
+`postcss-preset-env` (`webpack.config.js`, `'nesting-rules'`) and ships plain
+selectors.
+
+Do not take the config on trust — check the artifact:
+
+```sh
+pnpm run build && pnpm run check:css   # "dist/index.js carries no nested CSS."
+```
+
+To prove it in a browser, use one without nesting and confirm that first — paste
+`CSS.supports('selector(&)')` into the devtools console; `false` means the browser
+will drop nested rules. Chromium 103 is a known-good candidate:
+
+```sh
+pnpm dlx @puppeteer/browsers install chromium@1001000 --path /tmp/pptr
+# puppeteer prints the executable path; version 103, i.e. M103 before nesting
+```
+
+Load the mirror in that browser and confirm the author card, the event meta badges
+and the events listing still pick up the bundle's treatment (padding on the badges,
+the card's background and radius, the listing's side-by-side layout at desktop
+width). If they look like untouched Squarespace defaults, nesting survived the build.
+
 ## 4. Discover selectors against the live page
 
 The mirror is a snapshot, so a selector you need may be missing or out of date. Read the
@@ -117,7 +146,9 @@ position (ADR [0001](adr/0001-preview-gated-delivery-human-gate.md),
 2. **Check the changed page(s) at desktop and mobile widths.** Confirm the override bundle
    is actually loaded and that layout and injected DOM look right against the real
    Squarespace markup. The verification bar matches the mirror's — layout and injected DOM
-   only; forms, members and search are out of scope.
+   only; forms, members and search are out of scope. If the change touched CSS nesting or
+   `webpack.config.js`, run `pnpm run build && pnpm run check:css` before the merge as well
+   (step 3).
 3. **Then merge `dev` into `main`**, which deploys production automatically.
 
 The mirror loads the locally built bundle by default, and `BUNDLE_URL` (see `bs-config.js`)
