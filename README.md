@@ -5,7 +5,24 @@ A repository of scripts and styles for the Bike Worcester Squarespace website.
 ## Installation
 
 Install httrack using `brew install httrack` or `sudo apt install httrack`.
-Run `pnpm install` to install the dependencies the builds and the watch loop use.
+Run `pnpm install` to install the dependencies the builds and the watch loop use. It
+needs no flags.
+
+`pnpm-workspace.yaml` is where this repository answers pnpm's question about which
+dependencies may run install scripts. Each entry there carries the reason; a dependency
+that has not been decided on stops the install instead of running quietly. Two
+consequences worth knowing before the first install:
+
+- `@parcel/watcher` (sass's optional watcher) is approved, and its script is a no-op
+  wherever the prebuilt binding ships.
+- `puppeteer` is **denied** its postinstall, so its bundled Chrome is not downloaded. The
+  browser-driven checks in `docs/dev-loop.md` §3 drive the Chrome already installed on
+  the machine.
+
+pnpm also refuses any package published in the last 24 hours (`minimumReleaseAge`, a pnpm
+default we keep). The committed lockfile is clean under it. If a refresh resolves a
+package that new, the install stops and names it: wait for it to age out, or take the
+decision deliberately — do not hand-edit the lockfile to get past it.
 
 ## Development
 
