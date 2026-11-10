@@ -439,6 +439,193 @@ blockquote {
   margin-bottom: 16px;
 }
 
+/*
+ * Event list — listing restyle
+ *
+ * Additive layer on top of the rules above: the existing behaviours (hidden
+ * .eventlist-button, .events-collapsed trimming, title / column-info flex
+ * layout, badge backgrounds) are preserved and only extended. Every selector
+ * is scoped to .eventlist so the summary blocks and blog side-by-side lists
+ * that share similar markup are unaffected.
+ *
+ * Interpretation of the agreed direction:
+ *  - spacing follows a 0.4rem / 0.6rem / 0.8rem / 1.2rem / 1.6rem scale
+ *  - mobile stacks (date, thumbnail, info), tablet and up go side-by-side
+ *  - breakpoints reuse the repo's existing 786px tablet width, plus 1024px
+ *    for the wider desktop treatment
+ *  - colours come from the existing tokens only (--bwGreen time / category,
+ *    --bwBlue date tag / hover, --bwWhite card, --bwShadowLight elevation)
+ */
+
+.eventlist {
+  .eventlist-event {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 0 0 1.2rem;
+    padding: 1.2rem;
+    background: var(--bwWhite);
+    border-radius: 0.6rem;
+    box-shadow: var(--bwShadowLight);
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .eventlist-column-date {
+      flex: 0 0 auto;
+      align-self: flex-start;
+      margin: 0;
+    }
+
+    .eventlist-datetag {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2rem;
+      box-sizing: border-box;
+      min-width: 4.4rem;
+      padding: 0.6rem 0.8rem;
+      border-radius: 0.4rem;
+      background: var(--bwBlue);
+      color: var(--bwWhite);
+      line-height: 1;
+      text-align: center;
+      text-transform: uppercase;
+      box-shadow: var(--bwShadowLight);
+      .eventlist-datetag-month,
+      .eventlist-datetag-year {
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+      }
+      .eventlist-datetag-day {
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
+    }
+
+    .eventlist-column-thumbnail {
+      flex: 0 0 auto;
+      align-self: flex-start;
+      width: 100%;
+      margin: 0;
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        max-height: 14rem;
+        object-fit: cover;
+        border-radius: 0.4rem;
+      }
+    }
+
+    .eventlist-column-info {
+      flex: 1 1 auto;
+      width: 100%;
+      min-width: 0;
+    }
+  }
+
+  .eventlist-meta {
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    .eventlist-meta-item {
+      flex: 0 1 auto;
+      min-width: 0;
+      max-width: 100%;
+      box-sizing: border-box;
+      border-radius: 0.4rem;
+    }
+    .eventlist-meta-address a.eventlist-meta-address-maplink {
+      color: inherit;
+    }
+  }
+
+  .eventlist-categories {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    width: 100%;
+    margin: 0.6rem 0 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    li {
+      margin: 0;
+      list-style: none;
+    }
+    a {
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      border-radius: 999px;
+      background: var(--bwGreen);
+      color: var(--bwBlack);
+      text-decoration: none;
+      box-shadow: var(--bwShadowLight);
+      &:hover {
+        background: var(--bwBlue);
+        color: var(--bwWhite);
+      }
+    }
+  }
+
+  .eventlist-description,
+  .eventlist-excerpt {
+    width: 100%;
+    margin: 0.6rem 0 0;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: rgba(28, 28, 28, 0.75);
+    p {
+      margin: 0 0 0.6rem;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+/* Tablet and up: date tag, thumbnail and info sit side by side */
+@media screen and (min-width: 786px) {
+  .eventlist {
+    .eventlist-event {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 1.2rem;
+      padding: 1.6rem;
+      .eventlist-column-thumbnail {
+        width: 7rem;
+      }
+      .eventlist-column-info {
+        flex: 1 1 0;
+      }
+    }
+  }
+}
+
+/* Desktop: a little more breathing room on the larger canvas */
+@media screen and (min-width: 1024px) {
+  .eventlist {
+    .eventlist-event {
+      gap: 1.6rem;
+      padding: 1.6rem 2rem;
+      .eventlist-column-thumbnail {
+        width: 9rem;
+      }
+      .eventlist-datetag {
+        min-width: 5.2rem;
+        .eventlist-datetag-day {
+          font-size: 2.2rem;
+        }
+      }
+    }
+  }
+}
+
 /* Mega menu */
 @media screen and (min-width: 786px) {
   .search-link {
