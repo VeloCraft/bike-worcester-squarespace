@@ -15,6 +15,7 @@
     "serve-src": "node scripts/serve.js bundle dist",
     "serve-html": "node scripts/serve.js pristine html/www.bikeworcester.org.uk",
     "sync": "sh scripts/sync.sh",
+    "proto:event": "node prototype/event-page/build.mjs",
     "prepare": "husky",
     "commit-version-change": "git add package.json"
   },
