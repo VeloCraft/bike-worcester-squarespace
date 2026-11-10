@@ -1,8 +1,21 @@
+# Read by pnpm 12, and the reason `package.json` pins pnpm 12: on pnpm 9 this
+# file's `allowBuilds` is ignored and every dependency's install script runs, so
+# the decisions below would be decoration.
+#
 # pnpm 12 refuses to run a dependency's install scripts until someone has
 # decided, per package, that they should run; an install that meets an
 # undecided one rewrites this file with placeholders and exits 1. That is the
 # whole question this file answers. Every entry below is a decision, not a
 # default — see the comment on each.
+#
+# `packages` is required by pnpm 9's reader, which treats a workspace file with
+# no `packages` as an error (`packages field missing or empty`). Vercel's builder
+# carried pnpm 9 until the pin above reached it, and that is exactly how this
+# commit's first deploy failed. The root project is the only member, and pnpm 12
+# includes it whether or not it is listed.
+packages:
+  - '.'
+
 allowBuilds:
   # sass's optional file watcher, reached through sass-loader. Its `install`
   # script is `scripts/build-from-source.js`, which compiles a native addon with
