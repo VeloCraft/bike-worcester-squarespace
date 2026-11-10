@@ -1,0 +1,24 @@
+# pnpm 12 refuses to run a dependency's install scripts until someone has
+# decided, per package, that they should run; an install that meets an
+# undecided one rewrites this file with placeholders and exits 1. That is the
+# whole question this file answers. Every entry below is a decision, not a
+# default — see the comment on each.
+allowBuilds:
+  # sass's optional file watcher, reached through sass-loader. Its `install`
+  # script is `scripts/build-from-source.js`, which compiles a native addon with
+  # node-gyp only when no prebuilt binding for the platform was installed. The
+  # prebuilt bindings ship as optional dependencies (`@parcel/watcher-<platform>`),
+  # so on every platform we build for the script is a no-op that exits 0. Allowed
+  # because the alternative — a compile that needs Xcode command-line tools on a
+  # fresh machine — is exactly the fallback the script exists to avoid.
+  '@parcel/watcher': true
+
+  # Installed for the browser-driven checks in `docs/dev-loop.md` §6. Its
+  # `install` script downloads a ~150 MB Chrome build of puppeteer's choosing.
+  # Denied: the loop drives the Chrome already installed on the machine
+  # (`puppeteer.launch({ channel: 'chrome' })`), the bundle itself never runs
+  # puppeteer, and the pinned older Chromium used for the pre-nesting baseline is
+  # fetched separately with `pnpm dlx @puppeteer/browsers`. A second browser is
+  # 150 MB for no benefit. Anyone who does want the bundled build can opt in for
+  # one command with `pnpm exec puppeteer browsers install chrome`.
+  puppeteer: false
