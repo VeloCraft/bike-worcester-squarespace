@@ -478,9 +478,21 @@ blockquote {
       flex: 0 0 auto;
       align-self: flex-start;
       margin: 0;
+      /* The platform positions the date column and its tag absolutely, so the
+         tag sits in a gutter that the platform's own (float-based) layout
+         reserves for it. As flex items of our card they have to be in flow, or
+         the card's padding does not apply to them and the tag lands on top of
+         the title. In flow the markup order is thumbnail, info, date, so the
+         date is also pulled back to the front. */
+      position: static;
+      inset: auto;
+      width: auto;
+      order: -1;
     }
 
     .eventlist-datetag {
+      position: static;
+      inset: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
