@@ -10,4 +10,4 @@ Default labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-huma
 
 ### Domain docs
 
-Single-context: `GLOSSARY.md` + `docs/adr/` at repo root. See `docs/agents/domain.md`.
+Single-context: `GLOSSARY.md` (canonical terms) + `docs/adr/` (decisions, from `0001`) at repo root. See `docs/agents/domain.md`.
