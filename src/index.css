@@ -287,16 +287,21 @@ blockquote {
    * parent hands it the leftover space, and a start-aligned flex/grid item
    * never gets any. Re-assert the auto margins on the card itself (with
    * !important, to beat the newer rule's specificity) and additionally centre
-   * it as a flex item (`align-self`) and as a grid item (`justify-self`), so
-   * the card is centred in the article column for every tweak variant, at
-   * desktop and mobile widths alike.
+   * it as a flex item (`align-self`), so the card is centred in the article
+   * column for every tweak variant, at desktop and mobile widths alike. Auto
+   * margins centre a grid item in its area too, per the alignment spec.
+   *
+   * Deliberately no `justify-self: center`: current Chrome applies
+   * `justify-self` to block-level boxes, and centring a block-level box makes
+   * it shrink to fit its content — the card collapsed to its text width (136px
+   * instead of 352px on the live blog post, issue #24) while browsers that
+   * ignore the property in block layout kept it full width.
    */
   .blog-item-author-profile-wrapper {
     max-width: 320px;
     margin-left: auto !important;
     margin-right: auto !important;
     align-self: center;
-    justify-self: center;
     /*
      * The box styles live on the card itself (never on a shared parent, which
      * would shift other blocks) and are guarded by :not(:empty) so a post
