@@ -374,7 +374,9 @@ blockquote {
   margin: 0 !important;
   padding-bottom: 8px !important;
   line-height: 1 !important;
-  font-size: 2.4rem !important;
+  /* The listing's own title scale, not the page's. At 2.4rem the platform
+     heading size made every event read as a headline. */
+  font-size: 1.6rem !important;
   a.eventlist-title-link {
     display: block;
   }
@@ -511,13 +513,29 @@ blockquote {
       align-self: flex-start;
       width: 100%;
       margin: 0;
+      /* One aspect ratio at every width. Before this, the platform's square
+         thumbnail turned into a ~2.9:1 slab at tablet widths and a portrait
+         crop at desktop, purely from the image's intrinsic ratio meeting
+         `max-height`. A fixed ratio with `object-fit: cover` crops the photo
+         instead of reshaping the card.
+
+         The platform renders `.content-fill` as a zero-height box with the
+         image absolutely positioned and a `padding-bottom` that is the whole
+         thumbnail height, so the ratio has to be reclaimed from both: drop the
+         padding spacer, let the box take its height from `aspect-ratio`, and
+         put the image back in flow. */
+      aspect-ratio: 4 / 3;
+      height: auto !important;
+      padding-bottom: 0 !important;
+      overflow: hidden;
+      border-radius: 0.4rem;
       img {
+        position: static !important;
         display: block;
         width: 100%;
         height: 100%;
-        max-height: 14rem;
+        aspect-ratio: auto !important;
         object-fit: cover;
-        border-radius: 0.4rem;
       }
     }
 
@@ -589,6 +607,19 @@ blockquote {
   }
 }
 
+/* Wide but still stacked (above a phone, below the side-by-side layout): a
+   full-bleed 4:3 photo on every card is half a viewport tall, so cap it. */
+@media screen and (min-width: 600px) and (max-width: 785.98px) {
+  .eventlist {
+    .eventlist-event {
+      .eventlist-column-thumbnail {
+        width: 24rem;
+        max-width: 100%;
+      }
+    }
+  }
+}
+
 /* Tablet and up: date tag, thumbnail and info sit side by side */
 @media screen and (min-width: 786px) {
   .eventlist {
@@ -615,6 +646,9 @@ blockquote {
       padding: 1.6rem 2rem;
       .eventlist-column-thumbnail {
         width: 9rem;
+      }
+      .eventlist-title {
+        font-size: 1.8rem !important;
       }
       .eventlist-datetag {
         min-width: 5.2rem;
