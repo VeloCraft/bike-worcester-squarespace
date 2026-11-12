@@ -120,6 +120,21 @@ Re-take a snapshot after every save — the editor re-creates its overlays and u
 On a failed save: **stop the run**, report. Never create a second copy to "fix" the first. A wrong
 event is undone with `Item options` → `Delete`.
 
+### Default thumbnails
+
+Two series have a standing thumbnail in the repo, used whenever one of their events is created and
+the calendar supplies no image:
+
+| series | file |
+| --- | --- |
+| Repair Cafe | `event-images/Repair Cafe.jpg` |
+| Critical Mass | `event-images/Critical Mass.jpg` |
+
+Set it in the panel: `Item options` → `Settings` → `Content` → `FEATURED IMAGE` → `ADD IMAGE`, then
+the hidden `file upload` input, then `Save`. The image is committed only after the panel's `Save` —
+closing the panel raises a discard prompt. Applied 2026-11-12 to the two image-less events
+(`November Repair Cafe`, `Critical Mass Cycle Ride - November 2026`).
+
 ## 8. Keep the ledger; supersede only your own pages
 
 A **collapsed series** gets one page per date, and create-only cannot move it to the next date. The
@@ -163,6 +178,7 @@ A page that is not in the ledger is never touched, whatever its title or how wro
 - `references/editor.md` — the verified editor walkthrough (also covers login).
 - `references/setup.md` — browser profile and login, the one human-only step.
 - `ledger.json` — the site events this skill created, and may therefore supersede.
+- `../../../event-images/` — the standing thumbnails (above).
 
 ## Vocabulary
 
